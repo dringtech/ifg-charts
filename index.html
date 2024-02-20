@@ -26,35 +26,13 @@
     <div id="timeline-chart" class="container"></div>
     <script type="module">
       import { timeline } from '/src/charts.js';
-
-      const categories = [ 'Party affiliation', 'Gender' ];
-      const overlay = [
-        { date: '2019-11-12', label: 'General Election 2019' },
-        { date: '2023-04-06', label: 'Financial Year 2023' },
-        { date: '2023-11-11', label: 'Armistice Day 2023' },
-      ];
-
+      import { generatedData as data, categories, overlay } from '/test.js';
       const options = {
-        data: [
-          {
-            start: '2023-01-01',
-            end: '2023-06-12',
-            label: 'Line 1',
-            'Party affiliation': 'Labour',
-            Gender: 'male'
-          },
-          {
-            start: '2023-06-13',
-            end: '2024-02-12',
-            label: 'Line 2',
-            'Party affiliation': 'Conservative',
-          }
-        ],
+        data,
         categories,
         overlay,
         markers: true,
       }
-
       timeline("timeline-chart", options);
     </script>
   </body>

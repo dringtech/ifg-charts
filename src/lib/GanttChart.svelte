@@ -66,13 +66,15 @@
               stroke={ grid.colour }
               stroke-width={ grid.width }
               stroke-dasharray={ grid.dashArray }
+              vector-effect="non-scaling-stroke"
         />
 				<text
 					transform={ `translate(0,${innerHeight + 5})` }
 					text-anchor="middle"
 					dominant-baseline="hanging"
+          fill={ grid.colour }
 					text-rendering="optimizeLegibility"
-          stroke={ grid.colour }
+          vector-effect="non-scaling-stroke"
 				>
 					{ xFormatter(tickValue) }
 				</text>
@@ -87,6 +89,7 @@
         width={xScale(d.end) - xScale(d.start)}
         height={yScale.bandwidth()}
         fill={ colour(d[categoryName] || 'default') }
+        vector-effect="non-scaling-stroke"
       >
         <title>{d.label}</title>
       </rect>
@@ -97,6 +100,7 @@
         y={ yScale(idx) + yScale.bandwidth() / 2}
         dy=".32em"
         text-rendering="optimizeLegibility"
+        vector-effect="non-scaling-stroke"
       >
         {d.label}
       </text>
@@ -108,12 +112,14 @@
             stroke="black"
             stroke-width="2"
             stroke-dasharray="10 5"
+            vector-effect="non-scaling-stroke"
       />
       <text
         transform="translate(0,-10)"
         text-anchor="middle"
         dominant-baseline="text-top"
         text-rendering="optimizeLegibility"
+        vector-effect="non-scaling-stroke"
       >
         { label }
       </text>
