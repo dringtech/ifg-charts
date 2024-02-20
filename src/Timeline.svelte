@@ -1,5 +1,7 @@
 <script>
+  import { toPng } from 'dom-to-image-more';
   import GanttChart from './lib/GanttChart.svelte';
+
   export let data = [];
   export let categories = [];
   export let categoryColours = {
@@ -21,16 +23,33 @@
     menuExpanded = !menuExpanded;
   }
 
+  const getRenderWrapper = (node) => {
+    return node.closest('div.chart').querySelector('.render-wrapper');
+  }
+  const downloadLink = (dataUrl, filename) => {
+    const link = document.createElement('a');
+    link.download = filename
+    link.href = dataUrl;
+    link.click();
+  }
+
   function exportSVG() {
-    const svg = this.closest('div.chart').querySelector('svg');
+    const svg = getRenderWrapper(this).querySelector('svg')
     const serializer = new XMLSerializer();
     // TODO add styles - defs entry?
     const source = '<?xml version="1.0" standalone="no"?>\r\n' + serializer.serializeToString(svg);
-    const url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
-    const link = document.createElement("a");
-    link.download = 'chart.svg';
-    link.href = url;
-    link.click();
+    const dataUrl = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+    downloadLink(dataUrl, 'chart.svg');
+  }
+
+  async function exportPNG() {
+    let dataUrl;
+    try {
+      dataUrl = await toPng(getRenderWrapper(this));
+    } catch(e) {
+      console.error('Failed to render PNG', e);
+    }
+    downloadLink(dataUrl, 'chart.png');
   }
 </script>
 
@@ -41,8 +60,8 @@
       <span aria-hidden="true">{#if menuExpanded }&#x2212{:else}&#x002B;{/if}</span>
     </button>
     <div role="menu" hidden={ !menuExpanded }>
-      <button role="menuitem" on:click={ exportSVG }>Export SVG</button>
-      <button role="menuitem">Export PNG</button>
+      <button role="menuitem" on:click={ exportPNG }>Save image</button>
+      <button role="menuitem" on:click={ exportSVG }>Save SVG</button>
       <div>
         <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ markers }>
         <label for={ `${id}-marker-toggle` }>Toggle markers</label>
@@ -65,13 +84,14 @@
     </div>
   </div>
 
-  <GanttChart
-    { data }
-    categoryName={ category }
-    { categoryColours }
-    overlay={ markers ? overlay : [] }
-  />
-
+  <div class="render-wrapper">
+    <GanttChart
+      { data }
+      categoryName={ category }
+      { categoryColours }
+      overlay={ markers ? overlay : [] }
+    />
+  </div>
 <pre>
 Category { category }
 Markers { markers }

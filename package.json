@@ -11,6 +11,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "d3-scale": "^4.0.2",
+    "dom-to-image-more": "^3.3.0",
     "svelte": "^4.2.10",
     "vite": "^5.1.0"
   }
