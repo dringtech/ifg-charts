@@ -10,6 +10,7 @@
     'female': 'purple',
   }
   export let markers = true;
+  export let overlay = [];
 
   const id = Math.floor(100000 + Math.random() * 900000)
 
@@ -56,6 +57,7 @@
     { data }
     categoryName={ category }
     { categoryColours }
+    overlay={ markers ? overlay : [] }
   />
 
 

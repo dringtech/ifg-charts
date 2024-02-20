@@ -5,6 +5,7 @@
 	export let width = 800;
 	export let rowHeight = 50;
   export let categoryColours = {};
+  export let overlay;
   
   export let categoryName = 'default';
 
@@ -20,7 +21,7 @@
     ['#aaa', ...Object.values(categoryColours)]
   )
 
-  const margin = { left: 20, top: 20, right: 20, bottom: 40 };
+  const margin = { left: 20, top: 40, right: 20, bottom: 40 };
 
   // Convert date strings to actual dates and sort by start date
 	$: _data = data.map((d) => ({
@@ -42,13 +43,19 @@
 		.nice();
 	$: yScale = scaleBand().domain(yDomain).range([0, innerHeight]).padding(0.25);
 
+  $: _overlay = overlay.map((o) => ({
+    ...o,
+    date: new Date(o.date),
+  }))
+
   $: xFormatter = xScale.tickFormat();
 </script>
 
 <svg viewBox={`0 0 ${width} ${height}`}>
 	<g transform={`translate(${margin.left}, ${margin.top})`}>
 		<rect width={innerWidth} height={innerHeight} fill={ grid.background } />
-		{#each xScale.ticks(4) as tickValue}
+
+    {#each xScale.ticks(4) as tickValue}
 			<g transform={`translate(${xScale(tickValue)},0)`}>
 				<line y2={innerHeight}
               stroke={ grid.color }
@@ -56,36 +63,55 @@
               stroke-dasharray={ grid.dashArray }
         />
 				<text
-					transform={ `translate(0,${innerHeight + 15})` }
+					transform={ `translate(0,${innerHeight + 5})` }
 					text-anchor="middle"
-					dominant-baseline="middle"
+					dominant-baseline="hanging"
 					text-rendering="optimizeLegibility"
 				>
 					{ xFormatter(tickValue) }
 				</text>
 			</g>
 		{/each}
-		{#each _data as d, idx}
-			<rect
-				data-start={d.start}
-				x={xScale(d.start)}
-				y={yScale(idx)}
-				width={xScale(d.end) - xScale(d.start)}
-				height={yScale.bandwidth()}
+
+    {#each _data as d, idx}
+      <rect
+        data-start={d.start}
+        x={xScale(d.start)}
+        y={yScale(idx)}
+        width={xScale(d.end) - xScale(d.start)}
+        height={yScale.bandwidth()}
         fill={ colour(d[categoryName] || 'default') }
-			>
+      >
         <title>{d.label}</title>
       </rect>
-			<text
-				text-anchor="start"
-				x="{ xScale(d.end) }"
+      <text
+        text-anchor="start"
+        x="{ xScale(d.end) }"
         dx="5px"
-				y={ yScale(idx) + yScale.bandwidth() / 2}
-				dy=".32em"
-				text-rendering="optimizeLegibility"
-			>
-				{d.label}
-			</text>
-		{/each}
+        y={ yScale(idx) + yScale.bandwidth() / 2}
+        dy=".32em"
+        text-rendering="optimizeLegibility"
+      >
+        {d.label}
+      </text>
+    {/each}
+
+    {#each _overlay as { date, label }}
+    <g transform={`translate(${xScale(date)},0)`}>
+      <line y2={innerHeight}
+            stroke="black"
+            stroke-width="2"
+            stroke-dasharray="10 5"
+      />
+      <text
+        transform="translate(0,-10)"
+        text-anchor="middle"
+        dominant-baseline="text-top"
+        text-rendering="optimizeLegibility"
+      >
+        { label }
+      </text>
+    </g>
+    {/each}
 	</g>
 </svg>

@@ -19,6 +19,11 @@
     <script type="module">
       import { timeline } from '/src/charts.js';
 
+      const keyDates = [
+        { date: '2019-11-12', label: 'General Election 2019' },
+        { date: '2023-04-06', label: 'Tax year 2023' }
+      ]
+
       const options = {
         data: [
           {
@@ -36,6 +41,7 @@
           }
         ],
         categories: [ 'Party affiliation', 'Gender' ],
+        overlay: keyDates,
         markers: true,
       }
 
