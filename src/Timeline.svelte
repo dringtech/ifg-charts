@@ -20,17 +20,29 @@
   function toggleMenu() {
     menuExpanded = !menuExpanded;
   }
+
+  function exportSVG() {
+    const svg = this.closest('div.chart').querySelector('svg');
+    const serializer = new XMLSerializer();
+    // TODO add styles - defs entry?
+    const source = '<?xml version="1.0" standalone="no"?>\r\n' + serializer.serializeToString(svg);
+    const url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+    const link = document.createElement("a");
+    link.download = 'chart.svg';
+    link.href = url;
+    link.click();
+  }
 </script>
 
-<div>
+<div class="chart">
   <div class="controls">
     <button aria-haspopup="true" aria-expanded={ menuExpanded } on:click={ toggleMenu }>
       Chart Controls
       <span aria-hidden="true">{#if menuExpanded }&#x2212{:else}&#x002B;{/if}</span>
     </button>
     <div role="menu" hidden={ !menuExpanded }>
-      <button role="menuitem">Export SVG</button>
-      <button>Export PNG</button>
+      <button role="menuitem" on:click={ exportSVG }>Export SVG</button>
+      <button role="menuitem">Export PNG</button>
       <div>
         <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ markers }>
         <label for={ `${id}-marker-toggle` }>Toggle markers</label>
@@ -59,8 +71,6 @@
     { categoryColours }
     overlay={ markers ? overlay : [] }
   />
-
-
 
 <pre>
 Category { category }

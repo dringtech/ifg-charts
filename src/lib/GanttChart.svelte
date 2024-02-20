@@ -21,7 +21,7 @@
     ['#aaa', ...Object.values(categoryColours)]
   )
 
-  const margin = { left: 20, top: 40, right: 20, bottom: 40 };
+  const margin = { left: 40, top: 40, right: 40, bottom: 40 };
 
   // Convert date strings to actual dates and sort by start date
 	$: _data = data.map((d) => ({
@@ -43,11 +43,17 @@
 		.nice();
 	$: yScale = scaleBand().domain(yDomain).range([0, innerHeight]).padding(0.25);
 
-  $: _overlay = overlay.map((o) => ({
+  
+  $: _overlay = overlay
+  .map((o) => ({
     ...o,
     date: new Date(o.date),
   }))
-
+  .filter((o) =>
+    o.date >= Math.min(...xScale.domain()) &&
+    o.date <= Math.max(...xScale.domain())
+  )
+  
   $: xFormatter = xScale.tickFormat();
 </script>
 
