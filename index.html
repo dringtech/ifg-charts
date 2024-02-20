@@ -20,7 +20,22 @@
       import { timeline } from '/src/charts.js';
 
       const options = {
-        categories: [ 'Political party', 'Gender' ],
+        data: [
+          {
+            start: '2023-01-01',
+            end: '2023-06-12',
+            label: 'Line 1',
+            'Party affiliation': 'Labour',
+            Gender: 'male'
+          },
+          {
+            start: '2023-06-13',
+            end: '2024-02-12',
+            label: 'Line 2',
+            'Party affiliation': 'Conservative',
+          }
+        ],
+        categories: [ 'Party affiliation', 'Gender' ],
         markers: true,
       }
 

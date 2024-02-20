@@ -1,5 +1,14 @@
 <script>
+  import GanttChart from './lib/GanttChart.svelte';
+  export let data = [];
   export let categories = [];
+  export let categoryColours = {
+    'Labour': 'red',
+    'Conservative': 'blue',
+    
+    'male': 'green',
+    'female': 'purple',
+  }
   export let markers = true;
 
   const id = Math.floor(100000 + Math.random() * 900000)
@@ -43,7 +52,11 @@
     </div>
   </div>
 
-TIMELINE
+  <GanttChart
+    { data }
+    categoryName={ category }
+    { categoryColours }
+  />
 
 
 
