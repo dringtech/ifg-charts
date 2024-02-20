@@ -88,11 +88,6 @@
       width={ chartWidth }
     />
   </div>
-<pre>
-Category { category }
-Markers { markers }
-</pre>
-
 </div>
 
 <style>
