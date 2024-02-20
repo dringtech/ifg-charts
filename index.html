@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gantt Chart Example Embed</title>
+    <style>
+      .container {
+        max-width: 80rem;
+        margin-inline: auto;
+        background-color: gainsboro;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timeline-chart" class="container"></div>
+    <script type="module">
+      import { timeline } from '/src/charts.js';
+
+      const options = {
+        categories: [ 'Political party', 'Gender' ],
+        markers: true,
+      }
+
+      timeline("timeline-chart", options);
+    </script>
+  </body>
+</html>
