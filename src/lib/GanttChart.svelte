@@ -38,10 +38,16 @@
 	$: yDomain = _data.map((d, i) => i);
 
 	$: xScale = scaleTime()
-		.domain([Math.min.apply(null, xDomain), Math.max.apply(null, xDomain)])
+		.domain([
+      Math.min.apply(null, xDomain),
+      Math.max.apply(null, xDomain)
+    ])
 		.range([0, innerWidth])
 		.nice();
-	$: yScale = scaleBand().domain(yDomain).range([0, innerHeight]).padding(0.25);
+	$: yScale = scaleBand()
+    .domain(yDomain)
+    .range([0, innerHeight])
+    .padding(0.25);
 
   $: _overlay = overlay
     .map((o) => ({
@@ -54,6 +60,25 @@
     )
   
   $: xFormatter = xScale.tickFormat();
+
+  const labelPos = (d) => {
+    const start = xScale(d.start);
+    const end = xScale(d.end);
+  
+    if (end > innerWidth * 0.6) {
+      return {
+        x: start,
+        dx: '-5px',
+        'text-anchor': 'end'
+      }
+    }
+    
+    return {
+      x: end,
+      dx: '5px',
+      'text-anchor': 'start'
+    }
+  }
 </script>
 
 <svg viewBox={`0 0 ${width} ${height}`}>
@@ -68,13 +93,12 @@
               stroke-dasharray={ grid.dashArray }
               vector-effect="non-scaling-stroke"
         />
-				<text
-					transform={ `translate(0,${innerHeight + 5})` }
-					text-anchor="middle"
-					dominant-baseline="hanging"
-          fill={ grid.colour }
-					text-rendering="optimizeLegibility"
-          vector-effect="non-scaling-stroke"
+				<text transform={ `translate(0,${innerHeight + 5})` }
+              text-anchor="middle"
+              dominant-baseline="hanging"
+              fill={ grid.colour }
+              text-rendering="optimizeLegibility"
+              vector-effect="non-scaling-stroke"
 				>
 					{ xFormatter(tickValue) }
 				</text>
@@ -82,25 +106,21 @@
 		{/each}
 
     {#each _data as d, idx}
-      <rect
-        data-start={d.start}
-        x={xScale(d.start)}
-        y={yScale(idx)}
-        width={xScale(d.end) - xScale(d.start)}
-        height={yScale.bandwidth()}
-        fill={ colour(d[categoryName] || 'default') }
-        vector-effect="non-scaling-stroke"
+      <rect data-start={d.start}
+            x={xScale(d.start)}
+            y={yScale(idx)}
+            width={xScale(d.end) - xScale(d.start)}
+            height={yScale.bandwidth()}
+            fill={ colour(d[categoryName] || 'default') }
+            vector-effect="non-scaling-stroke"
       >
         <title>{d.label}</title>
       </rect>
-      <text
-        text-anchor="start"
-        x="{ xScale(d.end) }"
-        dx="5px"
-        y={ yScale(idx) + yScale.bandwidth() / 2}
-        dy=".32em"
-        text-rendering="optimizeLegibility"
-        vector-effect="non-scaling-stroke"
+      <text {...labelPos(d)}
+            y={ yScale(idx) + yScale.bandwidth() / 2}
+            dy=".32em"
+            text-rendering="optimizeLegibility"
+            vector-effect="non-scaling-stroke"
       >
         {d.label}
       </text>
@@ -114,12 +134,11 @@
             stroke-dasharray="10 5"
             vector-effect="non-scaling-stroke"
       />
-      <text
-        transform="translate(0,-10)"
-        text-anchor="middle"
-        dominant-baseline="text-top"
-        text-rendering="optimizeLegibility"
-        vector-effect="non-scaling-stroke"
+      <text transform="translate(0,-10)"
+            text-anchor="middle"
+            dominant-baseline="text-top"
+            text-rendering="optimizeLegibility"
+            vector-effect="non-scaling-stroke"
       >
         { label }
       </text>
