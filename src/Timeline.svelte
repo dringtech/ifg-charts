@@ -17,11 +17,6 @@
   const id = Math.floor(100000 + Math.random() * 900000)
 
   let category = categories[0] || undefined;
-  let menuExpanded = false;
-
-  function toggleMenu() {
-    menuExpanded = !menuExpanded;
-  }
 
   const getRenderWrapper = (node) => {
     return node.closest('div.chart').querySelector('.render-wrapper');
@@ -55,32 +50,30 @@
 
 <div class="chart">
   <div class="controls">
-    <button aria-haspopup="true" aria-expanded={ menuExpanded } on:click={ toggleMenu }>
-      Chart Controls
-      <span aria-hidden="true">{#if menuExpanded }&#x2212{:else}&#x002B;{/if}</span>
-    </button>
-    <div role="menu" hidden={ !menuExpanded }>
-      <button role="menuitem" on:click={ exportPNG }>Save image</button>
-      <button role="menuitem" on:click={ exportSVG }>Save SVG</button>
+    <div>
+      <label for={ `${id}-marker-toggle` }>Show markers</label>
+      <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ markers }>
+    </div>
+    {#if categories.length > 1}
+    <div>
+      <div>Colour by category:</div>
+      {#each categories as c, i}
       <div>
-        <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ markers }>
-        <label for={ `${id}-marker-toggle` }>Toggle markers</label>
+        <input
+          id={ `${id}-category-${i}` }
+          type='radio'
+          value={ c }
+          name='category'
+          bind:group={ category }
+        >
+        <label for={ `${id}-category-${i}` }>{ c }</label>
       </div>
-      {#if categories.length > 1}
-        <div>Colour by category:</div>
-        {#each categories as c, i}
-          <div>
-            <input
-              id={ `${id}-category-${i}` }
-              type='radio'
-              value={ c }
-              name='category'
-              bind:group={ category }
-            >
-            <label for={ `${id}-category-${i}` }>{ c }</label>
-          </div>
-        {/each}
-      {/if}
+      {/each}
+    </div>
+    {/if}
+    <div>
+      <button on:click={ exportPNG }>Save image</button>
+      <button on:click={ exportSVG }>Save SVG</button>
     </div>
   </div>
 
@@ -102,37 +95,35 @@ Markers { markers }
 <style>
   .controls {
     position: relative;
-    width: 10em;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
     color: yellow;
     background: #333;
   }
+  .controls > * {
+    gap: inherit;
+    display: inherit;
+  }
+  .controls > *:not(:last-child) {
+    padding-inline-end: 10px;
+    border-right: 2px solid yellow;
+  }
   .controls button {
-    width: 100%;
     font: inherit;
-    border: none;
-    outline: none;
-    background: inherit;
-    color: inherit;
-  }
-  [role=menu] {
-    position: absolute;
-    background: inherit;
-    border: inherit;
-    right: 0;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-  }
-  [role=menu] > * + * {
-    margin-top: 0.25em;
-  }
-  [role=menu] > button {
+    border: initial;
     color: #333;
     background: yellow;
     border-radius: 20px;
-    padding: 5px;
+    padding: 5px 20px;
   }
-  [hidden] {
-    display: none;
+  .controls button:hover {
+    text-decoration: underline;
+  }
+  .controls button:active {
+    background: white;
   }
 </style>
