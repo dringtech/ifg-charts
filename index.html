@@ -6,10 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gantt Chart Example Embed</title>
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+      html {
+        font-family: "Open Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: <weight>;
+        font-style: normal;
+        font-variation-settings: "wdth" 100;
+      }
       .container {
         max-width: 80rem;
         margin-inline: auto;
-        background-color: gainsboro;
+        background-color: bisque;
         padding: 10px;
       }
     </style>
@@ -19,10 +27,12 @@
     <script type="module">
       import { timeline } from '/src/charts.js';
 
-      const keyDates = [
+      const categories = [ 'Party affiliation', 'Gender' ];
+      const overlay = [
         { date: '2019-11-12', label: 'General Election 2019' },
-        { date: '2023-04-06', label: 'Tax year 2023' }
-      ]
+        { date: '2023-04-06', label: 'Financial Year 2023' },
+        { date: '2023-11-11', label: 'Armistice Day 2023' },
+      ];
 
       const options = {
         data: [
@@ -40,8 +50,8 @@
             'Party affiliation': 'Conservative',
           }
         ],
-        categories: [ 'Party affiliation', 'Gender' ],
-        overlay: keyDates,
+        categories,
+        overlay,
         markers: true,
       }
 

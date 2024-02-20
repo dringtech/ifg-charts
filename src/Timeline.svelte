@@ -22,11 +22,11 @@
   }
 </script>
 
-<div class="chart">
+<div>
   <div class="controls">
     <button aria-haspopup="true" aria-expanded={ menuExpanded } on:click={ toggleMenu }>
       Chart Controls
-      <span aria-hidden="true">&#x25be;</span>
+      <span aria-hidden="true">{#if menuExpanded }&#x2212{:else}&#x002B;{/if}</span>
     </button>
     <div role="menu" hidden={ !menuExpanded }>
       <button role="menuitem">Export SVG</button>
@@ -70,26 +70,24 @@ Markers { markers }
 </div>
 
 <style>
-  .chart {
-    position: relative;
-  }
   .controls {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: relative;
     width: 10em;
-    border-radius: 5px;
-    border: 1px solid black;
+    color: yellow;
+    background: #333;
   }
   .controls button {
     width: 100%;
-    background: inherit;
-    border: none;
     font: inherit;
+    border: none;
+    outline: none;
+    background: inherit;
     color: inherit;
   }
   [role=menu] {
-    position: relative;
+    position: absolute;
+    background: inherit;
+    border: inherit;
     right: 0;
     padding: 10px;
     display: flex;
@@ -99,8 +97,8 @@ Markers { markers }
     margin-top: 0.25em;
   }
   [role=menu] > button {
-    color: white;
-    background: black;
+    color: #333;
+    background: yellow;
     border-radius: 20px;
     padding: 5px;
   }
