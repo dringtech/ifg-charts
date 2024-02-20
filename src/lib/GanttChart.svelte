@@ -30,7 +30,7 @@
 		end: new Date(d.end)
 	})).sort((a, b) => a.start - b.start);
 
-	$: innerHeight = rowHeight * data.length;
+	$: innerHeight = rowHeight * _data.length;
 	$: innerWidth = width - margin.left - margin.right;
 	$: height = innerHeight + margin.top + margin.bottom;
 
@@ -43,16 +43,15 @@
 		.nice();
 	$: yScale = scaleBand().domain(yDomain).range([0, innerHeight]).padding(0.25);
 
-  
   $: _overlay = overlay
-  .map((o) => ({
-    ...o,
-    date: new Date(o.date),
-  }))
-  .filter((o) =>
-    o.date >= Math.min(...xScale.domain()) &&
-    o.date <= Math.max(...xScale.domain())
-  )
+    .map((o) => ({
+      ...o,
+      date: new Date(o.date),
+    }))
+    .filter((o) =>
+      o.date >= Math.min(...xScale.domain()) &&
+      o.date <= Math.max(...xScale.domain())
+    )
   
   $: xFormatter = xScale.tickFormat();
 </script>
