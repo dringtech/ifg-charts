@@ -10,7 +10,7 @@
   export let categoryName = 'default';
 
   const grid = {
-    color: '#999',
+    colour: '#999',
     width: '1',
     dashArray: 'none',
     background: 'none'
@@ -64,7 +64,7 @@
     {#each xScale.ticks(4) as tickValue}
 			<g transform={`translate(${xScale(tickValue)},0)`}>
 				<line y2={innerHeight}
-              stroke={ grid.color }
+              stroke={ grid.colour }
               stroke-width={ grid.width }
               stroke-dasharray={ grid.dashArray }
         />
@@ -73,6 +73,7 @@
 					text-anchor="middle"
 					dominant-baseline="hanging"
 					text-rendering="optimizeLegibility"
+          stroke={ grid.colour }
 				>
 					{ xFormatter(tickValue) }
 				</text>
