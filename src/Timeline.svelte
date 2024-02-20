@@ -14,6 +14,8 @@
   export let markers = true;
   export let overlay = [];
 
+  const chartWidth = 800;
+
   const id = Math.floor(100000 + Math.random() * 900000)
 
   let category = categories[0] || undefined;
@@ -77,12 +79,13 @@
     </div>
   </div>
 
-  <div class="render-wrapper">
+  <div class="render-wrapper" style={ `--content-width: ${ chartWidth }px;`}>
     <GanttChart
       { data }
       categoryName={ category }
       { categoryColours }
       overlay={ markers ? overlay : [] }
+      width={ chartWidth }
     />
   </div>
 <pre>
@@ -125,5 +128,11 @@ Markers { markers }
   }
   .controls button:active {
     background: white;
+  }
+  .render-wrapper {
+    overflow-x: auto;
+  }
+  .render-wrapper > :global(svg) {
+    min-width: var(--content-width);
   }
 </style>
