@@ -8,14 +8,17 @@
   export let rowPadding = 0.25;
   export let categoryColours = {};
   export let overlay;
-  
   export let categoryName = 'default';
+  export let grid = {};
 
-  const grid = {
+  const margin = { left: 40, top: 40, right: 40, bottom: 60 };
+
+  $: _grid = {
     colour: '#999',
     width: '1',
     dashArray: 'none',
-    background: 'none'
+    background: 'none',
+    ...grid
   };
 
   $: colour = scaleOrdinal(
@@ -79,20 +82,20 @@
 
 <svg viewBox={`0 0 ${width} ${height}`}>
 	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
-		<rect width={innerWidth} height={innerHeight} fill={ grid.background } />
+		<rect width={innerWidth} height={innerHeight} fill={ _grid.background } />
 
     {#each xScale.ticks(4) as tickValue}
 			<g transform={`translate(${xScale(tickValue)},0)`}>
 				<line y2={innerHeight}
-              stroke={ grid.colour }
-              stroke-width={ grid.width }
-              stroke-dasharray={ grid.dashArray }
+              stroke={ _grid.colour }
+              stroke-width={ _grid.width }
+              stroke-dasharray={ _grid.dashArray }
               vector-effect="non-scaling-stroke"
         />
 				<text transform={ `translate(0,${innerHeight + 5})` }
               text-anchor="middle"
               dominant-baseline="hanging"
-              fill={ grid.colour }
+              fill={ _grid.colour }
               text-rendering="optimizeLegibility"
               vector-effect="non-scaling-stroke"
 				>
