@@ -3,7 +3,9 @@
 
 	export let data;
 	export let width = 800;
-	export let rowHeight = 50;
+  export let fontSize = 12;
+	export let rowHeight = fontSize * 3;
+  export let rowPadding = 0.25;
   export let categoryColours = {};
   export let overlay;
   
@@ -21,7 +23,7 @@
     ['#aaa', ...Object.values(categoryColours)]
   )
 
-  const margin = { left: 40, top: 40, right: 40, bottom: 40 };
+  const margin = { left: 40, top: 40, right: 40, bottom: 60 };
 
   // Convert date strings to actual dates and sort by start date
 	$: _data = data.map((d) => ({
@@ -47,7 +49,12 @@
 	$: yScale = scaleBand()
     .domain(yDomain)
     .range([0, innerHeight])
-    .padding(0.25);
+    .padding(rowPadding);
+
+  // Get list of categories
+  $: categories = Array.from(
+      _data.reduce((a, d) => a.add(d[categoryName]), new Set())
+    ).sort((a, b) => a < b ? -1 : 1);
 
   $: _overlay = overlay
     .map((o) => ({
@@ -82,7 +89,7 @@
 </script>
 
 <svg viewBox={`0 0 ${width} ${height}`}>
-	<g transform={`translate(${margin.left}, ${margin.top})`}>
+	<g transform={`translate(${margin.left}, ${margin.top})`} font-size={ fontSize }>
 		<rect width={innerWidth} height={innerHeight} fill={ grid.background } />
 
     {#each xScale.ticks(4) as tickValue}
@@ -144,5 +151,14 @@
       </text>
     </g>
     {/each}
+    <g transform={ `translate(0, ${ innerHeight + 50 })`}>
+      <text>Legend:</text>
+      {#each categories as cat, index}
+      <g transform={ `translate(${ fontSize * ( 5 + index * 8 ) }) `}>
+      <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
+      <text x={ fontSize } >{ cat }</text>
+      </g>
+      {/each}
+    </g>
 	</g>
 </svg>
