@@ -1,9 +1,16 @@
-<script>
+<script lang="ts">
+  import type { TimelineEntry, OverlayEntry } from './timeline.d.ts';
   import GanttChart from './lib/GanttChart.svelte';
   import { ImageSaver } from '@dringtech/svelte-blocks';
 
-  export let data = [];
+  /** Data to be visualised. */
+  export let data: TimelineEntry[] = [];
+
+  /** List of categories */
   export let categories = [];
+  // TODO Convert to list of objects with id and optional label
+
+  /** Mapping of categories to colours */
   export let categoryColours = {
     'Labour': 'red',
     'Conservative': 'blue',
@@ -11,40 +18,71 @@
     'male': 'green',
     'female': 'purple',
   }
-  export let overlay = [];
+  // TODO Convert to object of objects with id -> { colour, optional label}
+
+  /** Array of key dates to display on the chart */
+  export let overlay: OverlayEntry[] = [];
+
+  /** Toggle to define if controls are shown */
   export let showControls = true;
-  export let showMarkers = true;
 
-  const chartWidth = 800;
+  /** Toggle to define if overlay is shown */
+  export let showOverlay = true;
 
+  /** Width of chart in pixels */
+  export let chartWidth = 800;
+
+  /**
+   * A generated id that uniquely identifies the component.
+   * Mainly used in input to label bindings
+   */
   const id = Math.floor(100000 + Math.random() * 900000)
 
+  /**
+   * The currently selected category. Defaults to the first category
+   * if categories are provided or `undefined` if not.
+   */
   let category = categories[0] || undefined;
+
+  /** Image saver reference */
+  let saver: ImageSaver;
 
   // Convert date strings to actual dates and sort by start date
 	$: _data = data.map((d) => ({
 		...d,
 		start: new Date(d.start),
 		end: new Date(d.end)
-	})).sort((a, b) => a.start - b.start);
+	})).sort((a, b) => a.start.getTime() - b.start.getTime());
 
-  // Convert date strings to actual dates, split labels ny spaces if not aleady an array
-  $: _overlay = showMarkers ? overlay.map((o) => ({
+  // Convert date strings to actual dates, split labels by spaces if not aleady an array
+  $: _overlay = showOverlay ? overlay.map((o) => ({
     ...o,
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
   })) : []
-
-  /** Image saver reference */
-  let saver;
 </script>
 
+<!-- 
+  @component
+  
+  App that displays a Timeline chart, with optional controls. Use as follows.
+
+  ```tsx
+    <Timeline   data={ [{ start: "2023-01-02", end: '2024-02-01', label: 'Label', propA: 'category-value-a' }] }
+                categories={ { propA: 'Property A' } }
+                colourScale={ { 'category-value-a': { colour: "#aaa", label: "Category A" } } }
+                overlays={ [{ date: '2023-06-04', label: 'Overlay 1' }] }
+                width="800"
+                showControls={ true } showOverlay={ true }
+    ></Timeline>
+    ```
+-->
 <div class="chart">
   {#if showControls }
   <div class="controls">
     <div>
       <label for={ `${id}-marker-toggle` }>Show markers</label>
-      <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ showMarkers }>
+      <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ showOverlay }>
     </div>
     {#if categories.length > 1}
     <div>

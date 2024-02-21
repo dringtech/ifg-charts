@@ -34,10 +34,11 @@ Expected options format:
   "overlay": [
     { "date": Date, "label": string }
   ],
-  "markers": boolean,
   "colours": {
     [category]: html colour string
-  }
+  },
+  "showControls": boolean,
+  "showOverlay": boolean
 }
 ```
 
