@@ -1,5 +1,6 @@
 <script>
 	import { scaleBand, scaleTime, scaleOrdinal } from 'd3-scale';
+	import { afterUpdate } from 'svelte';
 
 	export let data;
 	export let width = 800;
@@ -78,6 +79,22 @@
       'text-anchor': 'start'
     }
   }
+
+  /**
+   * Automatically re-assigns legend item positioning based on longest item.
+   */
+  let legendEl;
+  let legendItemWidth = 10;
+
+  function setLegendItemWidth() {
+    if (!legendEl) return;
+    const legendItems = Array.from(legendEl?.querySelectorAll('g').values() || []);
+    legendItemWidth = Math.max(...legendItems.map(x => x.getBBox().width)) / fontSize;
+  }
+  
+  afterUpdate(() => {
+    setLegendItemWidth();
+	});
 </script>
 
 <svg viewBox={`0 0 ${width} ${height}`}>
@@ -145,10 +162,10 @@
       </text>
     </g>
     {/each}
-    <g transform={ `translate(0, ${ innerHeight + 50 })`}>
+    <g transform={ `translate(0, ${ innerHeight + 50 })`} bind:this={ legendEl }>
       <text>Legend:</text>
       {#each categories as cat, index}
-      <g transform={ `translate(${ fontSize * ( 5 + index * 8 ) }) `}>
+      <g transform={ `translate(${ fontSize * ( 5 + index * (legendItemWidth + 1)) })`}>
       <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
       <text x={ fontSize } >{ cat }</text>
       </g>
