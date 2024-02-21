@@ -34,7 +34,6 @@
 
 	$: innerHeight = rowHeight * _data.length;
 	$: innerWidth = width - margin.left - margin.right;
-	$: height = innerHeight + margin.top + margin.bottom;
 
 	$: xDomain = _data.map((d) => [d.start, d.end]).flat();
 	$: yDomain = _data.map((d, i) => i);
@@ -51,21 +50,25 @@
     .range([0, innerHeight])
     .padding(rowPadding);
 
-  // Get list of categories
-  $: categories = Array.from(
-      _data.reduce((a, d) => a.add(d[categoryName]), new Set())
-    ).sort((a, b) => a < b ? -1 : 1);
-
   $: _overlay = overlay
     .map((o) => ({
       ...o,
+      label: o.label.split(/\s+/),
       date: new Date(o.date),
     }))
     .filter((o) =>
       o.date >= Math.min(...xScale.domain()) &&
       o.date <= Math.max(...xScale.domain())
     )
-  
+
+  $: calculatedTopMargin = Math.max(..._overlay.map(o => o.label.length * fontSize + 20), margin.top);
+	$: height = innerHeight + calculatedTopMargin + margin.bottom;
+
+  // Get list of categories
+  $: categories = Array.from(
+      _data.reduce((a, d) => a.add(d[categoryName]), new Set())
+    ).sort((a, b) => a < b ? -1 : 1);
+
   $: xFormatter = xScale.tickFormat();
 
   const labelPos = (d) => {
@@ -89,7 +92,7 @@
 </script>
 
 <svg viewBox={`0 0 ${width} ${height}`}>
-	<g transform={`translate(${margin.left}, ${margin.top})`} font-size={ fontSize }>
+	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
 		<rect width={innerWidth} height={innerHeight} fill={ grid.background } />
 
     {#each xScale.ticks(4) as tickValue}
@@ -147,7 +150,9 @@
             text-rendering="optimizeLegibility"
             vector-effect="non-scaling-stroke"
       >
-        { label }
+        {#each label.reverse() as line, idx}
+          <tspan x=0 y={ -idx * fontSize }>{ line }</tspan>
+        {/each}
       </text>
     </g>
     {/each}
