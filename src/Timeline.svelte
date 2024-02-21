@@ -1,6 +1,6 @@
 <script>
   import GanttChart from './lib/GanttChart.svelte';
-  import ImageSaver, { exportPNG, exportSVG } from './lib/ImageSaver.svelte';
+  import { ImageSaver } from '@dringtech/svelte-blocks';
 
   export let data = [];
   export let categories = [];
@@ -34,6 +34,9 @@
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
   })) : []
+
+  /** Image saver reference */
+  let saver;
 </script>
 
 <div class="chart">
@@ -54,13 +57,13 @@
     </div>
     {/if}
     <div>
-      <button on:click={ exportPNG }>Save image</button>
-      <button on:click={ exportSVG }>Save SVG</button>
+      <button on:click={ () => saver.exportPNG('timeline.png') }>Save image</button>
+      <button on:click={ () => saver.exportSVG('timeline.svg') }>Save SVG</button>
     </div>
   </div>
   {/if}
 
-  <ImageSaver>
+  <ImageSaver bind:this={ saver }>
     <GanttChart
       data={ _data }
       categoryName={ category }
