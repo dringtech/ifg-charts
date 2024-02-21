@@ -1,6 +1,6 @@
 <script>
-  import { toPng } from 'dom-to-image-more';
   import GanttChart from './lib/GanttChart.svelte';
+  import ImageSaver, { exportPNG, exportSVG } from './lib/ImageSaver.svelte';
 
   export let data = [];
   export let categories = [];
@@ -33,36 +33,6 @@
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
   })) : []
-
-  const getRenderWrapper = (node) => {
-    return node.closest('div.chart').querySelector('.render-wrapper');
-  }
-
-  const downloadLink = (dataUrl, filename) => {
-    const link = document.createElement('a');
-    link.download = filename
-    link.href = dataUrl;
-    link.click();
-  }
-
-  function exportSVG() {
-    const svg = getRenderWrapper(this).querySelector('svg')
-    const serializer = new XMLSerializer();
-    // TODO add styles - defs entry?
-    const source = '<?xml version="1.0" standalone="no"?>\r\n' + serializer.serializeToString(svg);
-    const dataUrl = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
-    downloadLink(dataUrl, 'chart.svg');
-  }
-
-  async function exportPNG() {
-    let dataUrl;
-    try {
-      dataUrl = await toPng(getRenderWrapper(this));
-    } catch(e) {
-      console.error('Failed to render PNG', e);
-    }
-    downloadLink(dataUrl, 'chart.png');
-  }
 </script>
 
 <div class="chart">
@@ -94,7 +64,7 @@
     </div>
   </div>
 
-  <div class="render-wrapper" style={ `--content-width: ${ chartWidth }px;`}>
+  <ImageSaver>
     <GanttChart
       data={ _data }
       categoryName={ category }
@@ -102,5 +72,5 @@
       overlay={ _overlay }
       width={ chartWidth }
     />
-  </div>
+  </ImageSaver>
 </div>
