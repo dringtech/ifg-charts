@@ -31,7 +31,7 @@ export const categories = [ 'Party affiliation', 'Gender' ];
 
 export const overlay = [
   { date: '2019-11-12', label: 'General Election 2019' },
-  { date: '2023-04-06', label: 'Financial Year 2023' },
-  { date: '2023-11-11', label: 'Armistice Day 2023' },
+  { date: new Date('2023-04-06'), label: 'Financial Year 2023' },
+  { date: '2023-11-11', label: ['Armistice', 'Day 2023'] },
 ];
 

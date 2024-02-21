@@ -23,20 +23,11 @@
     ['#aaa', ...Object.values(categoryColours)]
   )
 
-  const margin = { left: 40, top: 40, right: 40, bottom: 60 };
-
-  // Convert date strings to actual dates and sort by start date
-	$: _data = data.map((d) => ({
-		...d,
-		start: new Date(d.start),
-		end: new Date(d.end)
-	})).sort((a, b) => a.start - b.start);
-
-	$: innerHeight = rowHeight * _data.length;
+	$: innerHeight = rowHeight * data.length;
 	$: innerWidth = width - margin.left - margin.right;
 
-	$: xDomain = _data.map((d) => [d.start, d.end]).flat();
-	$: yDomain = _data.map((d, i) => i);
+	$: xDomain = data.map((d) => [d.start, d.end]).flat();
+	$: yDomain = data.map((d, i) => i);
 
 	$: xScale = scaleTime()
 		.domain([
@@ -51,11 +42,6 @@
     .padding(rowPadding);
 
   $: _overlay = overlay
-    .map((o) => ({
-      ...o,
-      label: o.label.split(/\s+/),
-      date: new Date(o.date),
-    }))
     .filter((o) =>
       o.date >= Math.min(...xScale.domain()) &&
       o.date <= Math.max(...xScale.domain())
@@ -66,7 +52,7 @@
 
   // Get list of categories
   $: categories = Array.from(
-      _data.reduce((a, d) => a.add(d[categoryName]), new Set())
+      data.reduce((a, d) => a.add(d[categoryName]), new Set())
     ).sort((a, b) => a < b ? -1 : 1);
 
   $: xFormatter = xScale.tickFormat();
@@ -115,7 +101,7 @@
 			</g>
 		{/each}
 
-    {#each _data as d, idx}
+    {#each data as d, idx}
       <rect data-start={d.start}
             x={xScale(d.start)}
             y={yScale(idx)}

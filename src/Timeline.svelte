@@ -20,9 +20,24 @@
 
   let category = categories[0] || undefined;
 
+  // Convert date strings to actual dates and sort by start date
+	$: _data = data.map((d) => ({
+		...d,
+		start: new Date(d.start),
+		end: new Date(d.end)
+	})).sort((a, b) => a.start - b.start);
+
+  // Convert date strings to actual dates, split labels ny spaces if not aleady an array
+  $: _overlay = markers ? overlay.map((o) => ({
+    ...o,
+    label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
+    date: new Date(o.date),
+  })) : []
+
   const getRenderWrapper = (node) => {
     return node.closest('div.chart').querySelector('.render-wrapper');
   }
+
   const downloadLink = (dataUrl, filename) => {
     const link = document.createElement('a');
     link.download = filename
@@ -81,10 +96,10 @@
 
   <div class="render-wrapper" style={ `--content-width: ${ chartWidth }px;`}>
     <GanttChart
-      { data }
+      data={ _data }
       categoryName={ category }
       { categoryColours }
-      overlay={ markers ? overlay : [] }
+      overlay={ _overlay }
       width={ chartWidth }
     />
   </div>
