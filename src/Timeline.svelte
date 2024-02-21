@@ -13,6 +13,7 @@
   }
   export let markers = true;
   export let overlay = [];
+  export let showMarkers = true;
 
   const chartWidth = 800;
 
@@ -43,19 +44,12 @@
     </div>
     {#if categories.length > 1}
     <div>
-      <div>Colour by category:</div>
-      {#each categories as c, i}
-      <div>
-        <input
-          id={ `${id}-category-${i}` }
-          type='radio'
-          value={ c }
-          name='category'
-          bind:group={ category }
-        >
-        <label for={ `${id}-category-${i}` }>{ c }</label>
-      </div>
-      {/each}
+      <label for={ `${id}-category-selector` }>Colour by category</label>
+      <select id={ `${id}-category-selector` } bind:value={ category }>
+        {#each categories as cat, i (cat)}
+        <option>{ cat }</option>
+        {/each}
+      </select>
     </div>
     {/if}
     <div>
