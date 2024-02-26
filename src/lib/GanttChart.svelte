@@ -132,14 +132,6 @@
       >
         <title>{d.label}</title>
       </rect>
-      <text {...labelPos(d)}
-            y={ yScale(idx) + yScale.bandwidth() / 2}
-            dy=".32em"
-            text-rendering="optimizeLegibility"
-            vector-effect="non-scaling-stroke"
-      >
-        {d.label}
-      </text>
     {/each}
 
     {#each _overlay as { date, label }}
@@ -162,6 +154,18 @@
       </text>
     </g>
     {/each}
+
+    {#each data as d, idx}
+      <text {...labelPos(d)}
+            y={ yScale(idx) + yScale.bandwidth() / 2}
+            dy=".32em"
+            text-rendering="optimizeLegibility"
+            vector-effect="non-scaling-stroke"
+      >
+        {d.label}
+      </text>
+    {/each}
+
     <g transform={ `translate(0, ${ innerHeight + 50 })`} bind:this={ legendEl }>
       <text>Legend:</text>
       {#each categories as cat, index}
