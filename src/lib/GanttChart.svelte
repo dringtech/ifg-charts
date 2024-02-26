@@ -13,6 +13,7 @@
   export let grid = {};
 
   const margin = { left: 40, top: 40, right: 40, bottom: 60 };
+  const DEFAULT_CATEGORY_VALUE = 'default'
 
   $: _grid = {
     colour: '#999',
@@ -22,10 +23,18 @@
     ...grid
   };
 
+  $: _categoryColours = {
+    [DEFAULT_CATEGORY_VALUE]: {
+      colour: '#aaa',
+      label: 'Unknown'
+    },
+    ...categoryColours
+  }
+
   $: colour = scaleOrdinal(
-    ['default', ...Object.keys(categoryColours)],
-    ['#aaa', ...Object.values(categoryColours).map(x => x.colour || '#777')]
-  )
+    [...Object.keys(_categoryColours)],
+    [...Object.values(_categoryColours).map(x => x.colour || '#222')]
+  )  
 
 	$: innerHeight = rowHeight * data.length;
 	$: innerWidth = width - margin.left - margin.right;
@@ -56,7 +65,7 @@
 
   // Get list of categories
   $: categories = Array.from(
-      data.reduce((a, d) => a.add(d[categoryName]), new Set())
+      data.reduce((a, d) => a.add(d[categoryName] || DEFAULT_CATEGORY_VALUE), new Set())
     ).sort((a, b) => a < b ? -1 : 1);
 
   $: xFormatter = xScale.tickFormat();
@@ -168,14 +177,16 @@
       </text>
     {/each}
 
+    {#if categories.length > 1}
     <g transform={ `translate(0, ${ innerHeight + 50 })`} bind:this={ legendEl }>
       <text>Legend:</text>
       {#each categories as cat, index}
       <g transform={ `translate(${ fontSize * ( 5 + index * (legendItemWidth + 1)) })`}>
-      <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
-      <text x={ fontSize } >{ categoryColours[cat]?.label || cat }</text>
+        <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
+        <text x={ fontSize } >{ _categoryColours[cat]?.label || cat }</text>
       </g>
       {/each}
     </g>
+    {/if}
 	</g>
 </svg>
