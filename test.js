@@ -119,3 +119,12 @@ export const overlay = [
   { date: '2019-03-01', label: ['First', 'elected'], colour: '#c1c5c8', persist: true },
 ];
 
+export const options = {
+  data: generatedData,
+  categories,
+  categoryColours,
+  overlay,
+  showControls: true,
+  showOverlay: true,
+}
+

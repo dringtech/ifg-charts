@@ -16,7 +16,7 @@ export function randomDate(start, days) {
 }
 
 export function* randomDateSequence(from) {
-  let start = randomDate(from, 365);
+  let start = randomDate(from, 30);
   while (true) {
     let end = randomDate(start, 365);
     yield {

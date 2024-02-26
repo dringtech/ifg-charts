@@ -17,7 +17,6 @@
       .container {
         max-width: 80rem;
         margin-inline: auto;
-        background-color: bisque;
         padding: 10px;
       }
     </style>
@@ -26,15 +25,7 @@
     <div id="timeline-chart" class="container"></div>
     <script type="module">
       import { timeline } from '/src/charts.js';
-      import { generatedData as data, categories, overlay, categoryColours } from '/test.js';
-      const options = {
-        data,
-        categories,
-        categoryColours,
-        overlay,
-        showControls: true,
-        showOverlay: true,
-      }
+      import { options } from '/test.js';
       timeline("timeline-chart", options);
     </script>
   </body>
