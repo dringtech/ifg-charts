@@ -24,7 +24,7 @@
 
   $: colour = scaleOrdinal(
     ['default', ...Object.keys(categoryColours)],
-    ['#aaa', ...Object.values(categoryColours)]
+    ['#aaa', ...Object.values(categoryColours).map(x => x.colour)]
   )
 
 	$: innerHeight = rowHeight * data.length;

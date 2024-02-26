@@ -12,11 +12,19 @@
 
   /** Mapping of categories to colours */
   export let categoryColours = {
-    'Labour': 'red',
-    'Conservative': 'blue',
+    'Labour': {
+      colour: 'red'
+    },
+    'Conservative': {
+      colour: 'blue'
+    },
     
-    'male': 'green',
-    'female': 'purple',
+    'male': {
+      colour: 'green'
+    },
+    'female': {
+      colour: 'purple'
+    },
   }
   // TODO Convert to object of objects with id -> { colour, optional label}
 
