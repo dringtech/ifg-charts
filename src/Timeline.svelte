@@ -11,22 +11,7 @@
   // TODO Convert to list of objects with id and optional label
 
   /** Mapping of categories to colours */
-  export let categoryColours = {
-    'Labour': {
-      colour: 'red'
-    },
-    'Conservative': {
-      colour: 'blue'
-    },
-    
-    'male': {
-      colour: 'green'
-    },
-    'female': {
-      colour: 'purple'
-    },
-  }
-  // TODO Convert to object of objects with id -> { colour, optional label}
+  export let categoryColours = {};
 
   /** Array of key dates to display on the chart */
   export let overlay: OverlayEntry[] = [];

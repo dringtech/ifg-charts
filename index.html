@@ -26,10 +26,11 @@
     <div id="timeline-chart" class="container"></div>
     <script type="module">
       import { timeline } from '/src/charts.js';
-      import { generatedData as data, categories, overlay } from '/test.js';
+      import { generatedData as data, categories, overlay, categoryColours } from '/test.js';
       const options = {
         data,
         categories,
+        categoryColours,
         overlay,
         showControls: true,
         showOverlay: true,

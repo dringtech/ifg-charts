@@ -24,7 +24,7 @@
 
   $: colour = scaleOrdinal(
     ['default', ...Object.keys(categoryColours)],
-    ['#aaa', ...Object.values(categoryColours).map(x => x.colour)]
+    ['#aaa', ...Object.values(categoryColours).map(x => x.colour || '#777')]
   )
 
 	$: innerHeight = rowHeight * data.length;
@@ -167,7 +167,7 @@
       {#each categories as cat, index}
       <g transform={ `translate(${ fontSize * ( 5 + index * (legendItemWidth + 1)) })`}>
       <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
-      <text x={ fontSize } >{ cat }</text>
+      <text x={ fontSize } >{ categoryColours[cat]?.label || cat }</text>
       </g>
       {/each}
     </g>
