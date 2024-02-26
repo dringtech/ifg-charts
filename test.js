@@ -1,4 +1,4 @@
-import { choose, randomDateSequence } from './utils.js';
+import { choose, cycle, randomDateSequence } from './utils.js';
 
 export const simpleData = [
   {
@@ -17,11 +17,25 @@ export const simpleData = [
 ];
 
 export const categoryColours = {
-  'Labour': {
-    colour: 'red'
+  'party-lab': {
+    colour: '#ee3224',
+    label: 'Labour'
   },
-  'Conservative': {
-    colour: 'blue'
+  'party-con': {
+    colour: '#00539f',
+    label: 'Conservative'
+  },
+  'party-lib': {
+    colour: '#ffb703',
+    label: 'Lib Dem / Liberal'
+  },
+  'party-snp': {
+    colour: '#fff95d',
+    label: 'SNP'
+  },
+  'party-independent': {
+    colour: '#c1c5c8',
+    label: 'Independent/Other'
   },
   'gender-male': {
     colour: '#00c7b1',
@@ -37,9 +51,31 @@ export const categoryColours = {
   }
 }
 
+// SNP #fff95d
+// Plaid Cymru #3f8429
+// Green #6ab023
+// UKIP #722889
+// Brexit Party/Reform UK #3bb7ce
+// DUP #8f1d20
+// Sinn Fein #006837
+// Alliance #f2d303
+// SDLP #0e6e51
+// UUP #0eaefe
+// Alba #005EB8
+// The Reclaim Party #14172D
+// People Before Profit #d62249
+// Traditional Unionist Voice #201863
+// Women's Equality Party #65b89a
+// SDP (current - for 80s alliance with Liberals, use Liberal colours) #d25469
+// The Independents/Independent/Other #d0006f [IfG Pink]
+// Independent/Other #c1c5c8  [IfG Grey]
+// BNP #2e3b74
+// Respect #af0004
+// The Independent Group (for Change)/Change UK #333f48 [IfG Dark Grey]
+
 const dateGen = randomDateSequence(new Date('2019-01-01'))
-const partyGen = choose('Conservative', 'Labour')
-const genderGen = choose('gender-male', 'gender-female', 'gender-other')
+const partyGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('party-')))
+const genderGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('gender-')))
 
 export const generatedData = Array.from(Array(10)).map((_, i) => ({
   ...(dateGen.next().value),
