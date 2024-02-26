@@ -116,5 +116,6 @@ export const overlay = [
   { date: '2019-11-12', label: 'General Election 2019' },
   { date: new Date('2023-04-06'), label: 'Financial Year 2023' },
   { date: '2023-11-11', label: ['Armistice', 'Day 2023'] },
+  { date: '2019-03-01', label: ['First', 'elected'], colour: '#c1c5c8', persist: true },
 ];
 

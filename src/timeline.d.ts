@@ -22,4 +22,8 @@ export type OverlayEntry = {
   date: Date | string;
   /** Label for the overlay entry */
   label: Label;
+  /** Colour for the overlay */
+  colour?: string;
+  /** Whether the overlay should be persistent */
+  persist?: boolean;
 }

@@ -48,11 +48,12 @@
 	})).sort((a, b) => a.start.getTime() - b.start.getTime());
 
   // Convert date strings to actual dates, split labels by spaces if not aleady an array
-  $: _overlay = showOverlay ? overlay.map((o) => ({
+  $: _overlay = overlay.map((o) => ({
+    colour: '#333f48',
     ...o,
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
-  })) : []
+  })).filter(o => showOverlay || o.persist)
 </script>
 
 <!-- 

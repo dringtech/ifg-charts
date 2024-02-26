@@ -134,21 +134,23 @@
       </rect>
     {/each}
 
-    {#each _overlay as { date, label }}
+    {#each _overlay as { date, label, colour }}
+    {@const _colour = colour || 'black'}
     <g transform={`translate(${xScale(date)},0)`}>
       <line y2={innerHeight}
-            stroke="black"
+            stroke={ _colour }
             stroke-width="2"
             stroke-dasharray="10 5"
             vector-effect="non-scaling-stroke"
       />
       <text transform="translate(0,-10)"
+            fill={ _colour }
             text-anchor="middle"
             dominant-baseline="text-top"
             text-rendering="optimizeLegibility"
             vector-effect="non-scaling-stroke"
       >
-        {#each label.reverse() as line, idx}
+        {#each label.toReversed() as line, idx}
           <tspan x=0 y={ -idx * fontSize }>{ line }</tspan>
         {/each}
       </text>
