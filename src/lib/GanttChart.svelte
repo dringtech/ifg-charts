@@ -4,9 +4,9 @@
 
 	export let data;
 	export let width = 800;
-  export let fontSize = 12;
-	export let rowHeight = fontSize * 3;
-  export let rowPadding = 0.25;
+  export let fontSize = 10;
+	export let rowHeight = 25;          // Row height 25px
+  export let rowPadding = 0.25;       // 25% top and 25% bottom = 50%
   export let categoryColours = {};
   export let overlay;
   export let categoryName = 'default';
