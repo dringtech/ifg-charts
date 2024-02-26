@@ -19,7 +19,7 @@
     colour: '#999',
     width: '1',
     dashArray: 'none',
-    background: 'none',
+    background: 'white',
     ...grid
   };
 
@@ -178,14 +178,31 @@
     {/each}
 
     {#each data as d, idx}
-      <text {...labelPos(d)}
-            y={ yScale(idx) + yScale.bandwidth() / 2}
-            dy=".32em"
-            text-rendering="optimizeLegibility"
-            vector-effect="non-scaling-stroke"
-      >
-        {d.label}
-      </text>
+      {@const p = labelPos(d) }
+      <g transform={ `translate(${ p.x } ${ yScale(idx) })` }>
+        <text
+          dx={ p.dx }
+          dy={ yScale.bandwidth() / 2 }
+          text-anchor={ p['text-anchor'] }
+          dominant-baseline="middle"
+          text-rendering="optimizeLegibility"
+          vector-effect="non-scaling-stroke"
+          stroke-width={ fontSize }
+          stroke={ _grid.background }
+        >
+          {d.label}
+        </text>
+        <text
+          dx={ p.dx }
+          dy={ yScale.bandwidth() / 2 }
+          text-anchor={ p['text-anchor'] }
+          dominant-baseline="middle"
+          text-rendering="optimizeLegibility"
+          vector-effect="non-scaling-stroke"
+        >
+          {d.label}
+        </text>
+      </g>
     {/each}
 
     {#if categories.length > 1}
