@@ -48,7 +48,31 @@ export const categoryColours = {
   'gender-other': {
     colour: '#ED8B00',
     label: 'Other'
-  }
+  },
+  'rank-1': {
+    colour: '#00C7B1',
+    label: 'Prime minister' 
+  },
+  'rank-2': {
+    colour: '#D0006F',
+    label: 'Deputy prime minister' 
+  },
+  'rank-3': {
+    colour: '#D0006F',
+    label: 'Secretary of state' 
+  },
+  'rank-4': {
+    colour: '#00A8E1',
+    label: 'Minister of state' 
+  },
+  'rank-5': {
+    colour: '#54D4FF',
+    label: 'Parliamentary under secretary of state' 
+  },
+  'rank-6': {
+    colour: '#BE75D2',
+    label: 'Whips' 
+  },
 }
 
 // SNP #fff95d
@@ -76,15 +100,17 @@ export const categoryColours = {
 const dateGen = randomDateSequence(new Date('2019-01-01'))
 const partyGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('party-')))
 const genderGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('gender-')))
+const rankGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('rank-')))
 
 export const generatedData = Array.from(Array(10)).map((_, i) => ({
   ...(dateGen.next().value),
   label: `Item ${i + 1}`,
   Gender: genderGen.next().value,
-  'Party affiliation': partyGen.next().value
+  'Party affiliation': partyGen.next().value,
+  'Ministerial rank': rankGen.next().value,
 }));
 
-export const categories = [ 'Party affiliation', 'Gender' ];
+export const categories = [ 'Party affiliation', 'Gender', 'Ministerial rank' ];
 
 export const overlay = [
   { date: '2019-11-12', label: 'General Election 2019' },
