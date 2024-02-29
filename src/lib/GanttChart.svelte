@@ -73,8 +73,9 @@
   const labelPos = (d) => {
     const start = xScale(d.start);
     const end = xScale(d.end);
+    const boundary = 1.0;
   
-    if (end > innerWidth * 0.6) {
+    if (end > innerWidth * boundary) {
       return {
         x: start,
         dx: '-5px',
