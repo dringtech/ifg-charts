@@ -1,18 +1,18 @@
 <script>
 	import { scaleBand, scaleTime, scaleOrdinal } from 'd3-scale';
-	import { afterUpdate } from 'svelte';
-  import SvgWrapper from './SvgWrapper.svelte';
+	import { afterUpdate, getContext } from 'svelte';
 
 	export let data;
-	export let width = 800;
   export let fontSize = 10;
 	export let rowHeight = 25;          // Row height 25px
   export let rowPadding = 0.25;       // 25% top and 25% bottom = 50%
   export let categoryColours = {};
-  export let minHeight = 0;
   export let overlay;
   export let categoryName = 'default';
   export let grid = {};
+
+  const chartWidth = getContext('width');
+  const chartHeight = getContext('height');
 
   const margin = { left: 40, top: 40, right: 40, bottom: 80 };
   const DEFAULT_CATEGORY_VALUE = 'default'
@@ -38,8 +38,8 @@
     [...Object.values(_categoryColours).map(x => x.colour || '#222')]
   )  
 
-	$: innerHeight = Math.max(rowHeight * data.length, minHeight);
-	$: innerWidth = width - margin.left - margin.right;
+	$: height = rowHeight * data.length;
+	$: width = chartWidth - margin.left - margin.right;
 
 	$: xDomain = data.map((d) => [d.start, d.end]).flat();
 	$: yDomain = data.map((d, i) => i);
@@ -49,7 +49,7 @@
       Math.min.apply(null, xDomain),
       Math.max.apply(null, xDomain)
     ])
-		.range([0, innerWidth])
+		.range([0, width])
 		.nice();
 	$: yScale = scaleBand()
     .domain(yDomain)
@@ -63,7 +63,7 @@
     )
 
   $: calculatedTopMargin = Math.max(..._overlay.map(o => o.label.length * fontSize + 20), margin.top);
-	$: height = innerHeight + calculatedTopMargin + margin.bottom;
+	$: $chartHeight = height + calculatedTopMargin + margin.bottom;
 
   // Get list of categories
   $: categories = Array.from(
@@ -97,7 +97,7 @@
           halo: colour(bar.category),
           dx: undefined,
         }
-      } else if(bar.end + glow.getComputedTextLength() + fontSize > innerWidth) {
+      } else if(bar.end + glow.getComputedTextLength() + fontSize > width) {
         labelConfig = {
           x: bar.start,
           textAnchor: 'end',
@@ -133,7 +133,7 @@
     for (const idx in legendItems) {
       legendMarkerPositions = [...legendMarkerPositions, { x, y }];
       x += legendItems[idx].getBBox().width / fontSize + 1;
-      if (x * fontSize > innerWidth) {
+      if (x * fontSize > width) {
         x = xGutter;
         y += 1.5;
       }
@@ -144,26 +144,20 @@
     calculateLabelPositions();
     setLegendItemWidth();
 	});
-  $: svgOpts = {
-    'stroke-linecap': 'round',
-    'stroke-linejoin': 'round',
-    style:`background:${ _grid.background };`
-  }
 </script>
 
-<SvgWrapper { width } { height } opts={ svgOpts }>
 	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
-		<rect width={innerWidth} height={innerHeight} fill={ _grid.background } />
+		<rect width={width} height={height} fill={ _grid.background } />
 
     {#each xScale.ticks(4) as tickValue}
 			<g transform={`translate(${xScale(tickValue)},0)`}>
-				<line y2={innerHeight}
+				<line y2={height}
               stroke={ _grid.colour }
               stroke-width={ _grid.width }
               stroke-dasharray={ _grid.dashArray }
               vector-effect="non-scaling-stroke"
         />
-				<text transform={ `translate(0,${innerHeight + 5})` }
+				<text transform={ `translate(0,${height + 5})` }
               text-anchor="middle"
               dominant-baseline="hanging"
               fill={ _grid.colour }
@@ -191,7 +185,7 @@
     {#each _overlay as { date, label, colour }}
     {@const _colour = colour || 'black'}
     <g transform={`translate(${xScale(date)},0)`}>
-      <line y2={innerHeight}
+      <line y2={height}
             stroke={ _colour }
             stroke-width="2"
             stroke-dasharray="10 5"
@@ -243,7 +237,7 @@
     </g>
 
     {#if categories.length > 1}
-    <g transform={ `translate(0, ${ innerHeight + 50 })`} bind:this={ legendEl }>
+    <g transform={ `translate(0, ${ height + 50 })`} bind:this={ legendEl }>
       <text>Legend:</text>
       {#each categories as cat, index}
       {@const thisCategory = _categoryColours[cat] }
@@ -256,4 +250,3 @@
     </g>
     {/if}
 	</g>
-</SvgWrapper>

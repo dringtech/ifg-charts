@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { TimelineEntry, OverlayEntry } from './timeline.d.ts';
+  import SvgWrapper from './lib/SvgWrapper.svelte';
   import GanttChart from './lib/GanttChart.svelte';
   import { ImageSaver } from '@dringtech/svelte-blocks';
   import { contrastColour, highContrast } from './contrast.js';
@@ -25,6 +26,7 @@
 
   /** Width of chart in pixels */
   export let chartWidth = 800;
+  export let minHeight = 300;
 
   /**
    * A generated id that uniquely identifies the component.
@@ -66,6 +68,12 @@
       legendTextColour: highContrast(c?.colour, backgroundColour, 250) ? c?.colour : contrastColour(backgroundColour),
     },
   }), {})
+
+  $: svgOpts = {
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round',
+    style:`background:${ backgroundColour };`
+  }
 </script>
 
 <!-- 
@@ -110,16 +118,19 @@
   {/if}
 
   <ImageSaver bind:this={ saver }>
-    <GanttChart
-      data={ _data }
-      categoryName={ category }
-      categoryColours={ _categoryColours }
-      overlay={ _overlay }
+    <SvgWrapper
       width={ chartWidth }
-      minHeight={ 300 }
-      grid={
-        { background: backgroundColour }
-      }
-    />
+      { minHeight }
+      opts={ svgOpts }>
+      <GanttChart
+        data={ _data }
+        categoryName={ category }
+        categoryColours={ _categoryColours }
+        overlay={ _overlay }
+        grid={
+          { background: backgroundColour }
+        }
+      />
+    </SvgWrapper>
   </ImageSaver>
 </div>
