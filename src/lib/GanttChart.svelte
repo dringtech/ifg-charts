@@ -1,6 +1,7 @@
 <script>
 	import { scaleBand, scaleTime, scaleOrdinal } from 'd3-scale';
 	import { afterUpdate } from 'svelte';
+  import SvgWrapper from './SvgWrapper.svelte';
 
 	export let data;
 	export let width = 800;
@@ -143,9 +144,14 @@
     calculateLabelPositions();
     setLegendItemWidth();
 	});
+  $: svgOpts = {
+    'stroke-linecap': 'round',
+    'stroke-linejoin': 'round',
+    style:`background:${ _grid.background };`
+  }
 </script>
 
-<svg viewBox={`0 0 ${width} ${height}`} stroke-linecap="round" stroke-linejoin="round" style={ `background:${ _grid.background };` }>
+<SvgWrapper { width } { height } opts={ svgOpts }>
 	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
 		<rect width={innerWidth} height={innerHeight} fill={ _grid.background } />
 
@@ -250,4 +256,4 @@
     </g>
     {/if}
 	</g>
-</svg>
+</SvgWrapper>
