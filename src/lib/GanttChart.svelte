@@ -74,20 +74,33 @@
   const labelPos = (d) => {
     const start = xScale(d.start);
     const end = xScale(d.end);
+    const length = end - start;
+
+    // Naive layout
+    if (length > 30) {
+      return {
+        x: start + length / 2,
+        'text-anchor': 'middle',
+        fill: _categoryColours[d[categoryName]].contrastColour,
+        halo: colour(d[categoryName]),
+      }
+    };
     const boundary = 1.0;
   
     if (end > innerWidth * boundary) {
       return {
         x: start,
         dx: '-5px',
-        'text-anchor': 'end'
+        'text-anchor': 'end',
+        fill: 'black'
       }
     }
     
     return {
       x: end,
       dx: '5px',
-      'text-anchor': 'start'
+      'text-anchor': 'start',
+      fill: 'black'
     }
   }
 
@@ -190,13 +203,14 @@
           text-rendering="optimizeLegibility"
           vector-effect="non-scaling-stroke"
           stroke-width={ fontSize }
-          stroke={ _grid.background }
+          stroke={ p.halo || _grid.background }
         >
           {d.label}
         </text>
         <text
           dx={ p.dx }
           dy={ yScale.bandwidth() / 2 }
+          fill={ p.fill || "red" }
           text-anchor={ p['text-anchor'] }
           dominant-baseline="middle"
           text-rendering="optimizeLegibility"

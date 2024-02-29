@@ -2,6 +2,7 @@
   import type { TimelineEntry, OverlayEntry } from './timeline.d.ts';
   import GanttChart from './lib/GanttChart.svelte';
   import { ImageSaver } from '@dringtech/svelte-blocks';
+  import { contrastColour } from './contrast.js';
 
   /** Data to be visualised. */
   export let data: TimelineEntry[] = [];
@@ -54,6 +55,15 @@
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
   })).filter(o => showOverlay || o.persist)
+
+  $: _categoryColours = Object.entries(categoryColours).reduce((a, [k, c]) => ({
+    ...a,
+    [k]: {
+      ...c,
+      colour: c.colour,
+      contrastColour: contrastColour(c?.colour)
+    },
+  }), {})
 </script>
 
 <!-- 
@@ -101,7 +111,7 @@
     <GanttChart
       data={ _data }
       categoryName={ category }
-      { categoryColours }
+      categoryColours={ _categoryColours }
       overlay={ _overlay }
       width={ chartWidth }
       minHeight={ 300 }
