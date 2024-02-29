@@ -117,7 +117,7 @@
 	});
 </script>
 
-<svg viewBox={`0 0 ${width} ${height}`}>
+<svg viewBox={`0 0 ${width} ${height}`} stroke-linecap="round" stroke-linejoin="round">
 	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
 		<rect width={innerWidth} height={innerHeight} fill={ _grid.background } />
 
