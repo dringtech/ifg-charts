@@ -145,7 +145,7 @@
 	});
 </script>
 
-<svg viewBox={`0 0 ${width} ${height}`} stroke-linecap="round" stroke-linejoin="round">
+<svg viewBox={`0 0 ${width} ${height}`} stroke-linecap="round" stroke-linejoin="round" style={ `background:${ _grid.background };` }>
 	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
 		<rect width={innerWidth} height={innerHeight} fill={ _grid.background } />
 
@@ -240,10 +240,11 @@
     <g transform={ `translate(0, ${ innerHeight + 50 })`} bind:this={ legendEl }>
       <text>Legend:</text>
       {#each categories as cat, index}
+      {@const thisCategory = _categoryColours[cat] }
       {@const offset = legendMarkerPositions[index] || { x: 0, y: 0} }
       <g transform={ `translate(${ fontSize * offset.x } ${ fontSize * offset.y })`}>
         <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
-        <text x={ fontSize } >{ _categoryColours[cat]?.label || cat }</text>
+        <text x={ fontSize } fill={ thisCategory.legendTextColour }>{ thisCategory?.label || cat }</text>
       </g>
       {/each}
     </g>

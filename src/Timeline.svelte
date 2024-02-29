@@ -2,7 +2,7 @@
   import type { TimelineEntry, OverlayEntry } from './timeline.d.ts';
   import GanttChart from './lib/GanttChart.svelte';
   import { ImageSaver } from '@dringtech/svelte-blocks';
-  import { contrastColour } from './contrast.js';
+  import { contrastColour, highContrast } from './contrast.js';
 
   /** Data to be visualised. */
   export let data: TimelineEntry[] = [];
@@ -32,6 +32,8 @@
    */
   const id = Math.floor(100000 + Math.random() * 900000)
 
+  const backgroundColour = 'white';
+
   /**
    * The currently selected category. Defaults to the first category
    * if categories are provided or `undefined` if not.
@@ -60,7 +62,8 @@
     ...a,
     [k]: {
       ...c,
-      contrastColour: c?.contrastColour || contrastColour(c?.colour)
+      contrastColour: c?.contrastColour || contrastColour(c?.colour),
+      legendTextColour: highContrast(c?.colour, backgroundColour, 250) ? c?.colour : contrastColour(backgroundColour),
     },
   }), {})
 </script>
@@ -114,6 +117,9 @@
       overlay={ _overlay }
       width={ chartWidth }
       minHeight={ 300 }
+      grid={
+        { background: backgroundColour }
+      }
     />
   </ImageSaver>
 </div>
