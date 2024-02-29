@@ -15,10 +15,10 @@ export function randomDate(start, days) {
   return new Date(start.getTime() + Math.random() * days * 24 * 60 * 60 * 1000);
 }
 
-export function* randomDateSequence(from) {
+export function* randomDateSequence(from, maxDuration = 365) {
   let start = randomDate(from, 30);
   while (true) {
-    let end = randomDate(start, 365);
+    let end = randomDate(start, maxDuration);
     yield {
       start: start.toISOString(),
       end: end.toISOString()

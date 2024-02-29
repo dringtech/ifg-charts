@@ -97,7 +97,7 @@ export const categoryColours = {
 // Respect #af0004
 // The Independent Group (for Change)/Change UK #333f48 [IfG Dark Grey]
 
-const dateGen = randomDateSequence(new Date('2019-01-01'))
+const dateGen = randomDateSequence(new Date('2019-01-01'), 120)
 const partyGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('party-')))
 const genderGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('gender-')))
 const rankGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('rank-')))
@@ -121,10 +121,9 @@ export const overlay = [
 
 export const options = {
   data: generatedData,
-  categories,
-  categoryColours,
-  overlay,
+  // categories,
+  // categoryColours,
+  // overlay,
   showControls: true,
-  showOverlay: true,
 }
 
