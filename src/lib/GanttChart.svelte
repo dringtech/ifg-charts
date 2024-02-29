@@ -8,6 +8,7 @@
 	export let rowHeight = 25;          // Row height 25px
   export let rowPadding = 0.25;       // 25% top and 25% bottom = 50%
   export let categoryColours = {};
+  export let minHeight = 0;
   export let overlay;
   export let categoryName = 'default';
   export let grid = {};
@@ -36,7 +37,7 @@
     [...Object.values(_categoryColours).map(x => x.colour || '#222')]
   )  
 
-	$: innerHeight = rowHeight * data.length;
+	$: innerHeight = Math.max(rowHeight * data.length, minHeight);
 	$: innerWidth = width - margin.left - margin.right;
 
 	$: xDomain = data.map((d) => [d.start, d.end]).flat();
@@ -51,7 +52,7 @@
 		.nice();
 	$: yScale = scaleBand()
     .domain(yDomain)
-    .range([0, innerHeight])
+    .range([0, rowHeight * data.length])
     .padding(rowPadding);
 
   $: _overlay = overlay

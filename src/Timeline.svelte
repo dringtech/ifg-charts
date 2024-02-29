@@ -104,6 +104,7 @@
       { categoryColours }
       overlay={ _overlay }
       width={ chartWidth }
+      minHeight={ 300 }
     />
   </ImageSaver>
 </div>
