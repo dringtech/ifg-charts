@@ -74,10 +74,12 @@
 <div class="chart">
   {#if showControls }
   <div class="controls">
+    {#if _overlay.length > 0}
     <div>
       <label for={ `${id}-marker-toggle` }>Show markers</label>
       <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ showOverlay }>
     </div>
+    {/if}
     {#if categories.length > 1}
     <div>
       <label for={ `${id}-category-selector` }>Colour by category</label>
