@@ -243,8 +243,8 @@
       {@const thisCategory = _categoryColours[cat] }
       {@const offset = legendMarkerPositions[index] || { x: 0, y: 0} }
       <g transform={ `translate(${ fontSize * offset.x } ${ fontSize * offset.y })`}>
-        <rect y={ -(fontSize - 4) } width={ fontSize - 4 } height={ fontSize - 4 } fill={ colour(cat) }/>
-        <text x={ fontSize } fill={ thisCategory.legendTextColour }>{ thisCategory?.label || cat }</text>
+        <rect y={ -(fontSize - 2) } width={ fontSize -2 } height={ fontSize - 2 } fill={ colour(cat) }/>
+        <text dx={ fontSize * 1.5 } fill={ thisCategory.legendTextColour }>{ thisCategory?.label || cat }</text>
       </g>
       {/each}
     </g>
