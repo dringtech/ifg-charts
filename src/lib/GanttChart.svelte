@@ -71,36 +71,48 @@
 
   $: xFormatter = xScale.tickFormat();
 
-  const labelPos = (d) => {
-    const start = xScale(d.start);
-    const end = xScale(d.end);
-    const length = end - start;
+  let labelsEl;
+  let labelPositions = [];
 
-    // Naive layout
-    if (length > 30) {
-      return {
-        x: start + length / 2,
-        'text-anchor': 'middle',
-        fill: _categoryColours[d[categoryName]].contrastColour,
-        halo: colour(d[categoryName]),
+  function calculateLabelPositions() {
+    labelPositions = []
+    const labels = Array.from(labelsEl.querySelectorAll('g'));
+
+    for (const i in labels) {
+      const l = labels[i]
+      const [ glow, label ] = Array.from(l.querySelectorAll('text'))
+
+      const bar = {
+        start: xScale(data[i].start),
+        end: xScale(data[i].end),
+        category: data[i][categoryName],
       }
-    };
-    const boundary = 1.0;
-  
-    if (end > innerWidth * boundary) {
-      return {
-        x: start,
-        dx: '-5px',
-        'text-anchor': 'end',
-        fill: 'black'
+      let labelConfig;
+      if ( (bar.end - bar.start - fontSize) > glow.getComputedTextLength()) {
+        labelConfig = {
+          x: bar.start + (bar.end - bar.start) / 2,
+          textAnchor: 'middle',
+          fill: _categoryColours[bar.category].contrastColour,
+          halo: colour(bar.category),
+          dx: undefined,
+        }
+      } else if(bar.end + glow.getComputedTextLength() + fontSize > innerWidth) {
+        labelConfig = {
+          x: bar.start,
+          textAnchor: 'end',
+          dx: - fontSize / 2,
+          halo: _grid.background
+        }
+
+      } else {
+        labelConfig = {
+          x: bar.end,
+          dx: fontSize / 2,
+          textAnchor: 'start',
+          halo: _grid.background
+        }
       }
-    }
-    
-    return {
-      x: end,
-      dx: '5px',
-      'text-anchor': 'start',
-      fill: 'black'
+      labelPositions = [ ...labelPositions, labelConfig ];
     }
   }
 
@@ -128,6 +140,7 @@
   }
   
   afterUpdate(() => {
+    calculateLabelPositions();
     setLegendItemWidth();
 	});
 </script>
@@ -192,27 +205,28 @@
     </g>
     {/each}
 
+    <g bind:this={ labelsEl }>
     {#each data as d, idx}
-      {@const p = labelPos(d) }
-      <g transform={ `translate(${ p.x } ${ yScale(idx) })` }>
+      {@const labelConfig = labelPositions[idx] }
+      <g transform={ `translate(${ labelConfig?.x || 0 } ${ yScale(idx) })` }>
         <text
-          dx={ p.dx }
+          dx={ labelConfig?.dx }
           dy={ yScale.bandwidth() / 2 }
-          text-anchor={ p['text-anchor'] }
+          text-anchor={ labelConfig?.textAnchor }
           dominant-baseline="middle"
+          stroke-width={ fontSize }
+          stroke={ labelConfig?.halo || _grid.background }
           text-rendering="optimizeLegibility"
           vector-effect="non-scaling-stroke"
-          stroke-width={ fontSize }
-          stroke={ p.halo || _grid.background }
         >
           {d.label}
         </text>
         <text
-          dx={ p.dx }
+          dx={ labelConfig?.dx }
           dy={ yScale.bandwidth() / 2 }
-          fill={ p.fill || "red" }
-          text-anchor={ p['text-anchor'] }
+          text-anchor={ labelConfig?.textAnchor }
           dominant-baseline="middle"
+          fill={ labelConfig?.fill }
           text-rendering="optimizeLegibility"
           vector-effect="non-scaling-stroke"
         >
@@ -220,6 +234,7 @@
         </text>
       </g>
     {/each}
+    </g>
 
     {#if categories.length > 1}
     <g transform={ `translate(0, ${ innerHeight + 50 })`} bind:this={ legendEl }>

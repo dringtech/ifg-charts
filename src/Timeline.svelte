@@ -60,8 +60,7 @@
     ...a,
     [k]: {
       ...c,
-      colour: c.colour,
-      contrastColour: contrastColour(c?.colour)
+      contrastColour: c?.contrastColour || contrastColour(c?.colour)
     },
   }), {})
 </script>
