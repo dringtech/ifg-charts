@@ -3,16 +3,16 @@ import { choose, cycle, randomDateSequence } from './utils.js';
 export const simpleData = [
   {
     start: '2023-01-01',
-    end: '2023-06-12',
+    end: '2023-01-30',
     label: 'Line 1',
-    'Party affiliation': 'Labour',
-    Gender: 'male'
+    'Party affiliation': 'party-lab',
+    Gender: 'gender-male'
   },
   {
     start: '2023-06-13',
     end: '2024-02-12',
     label: 'Line 2',
-    'Party affiliation': 'Conservative',
+    'Party affiliation': 'party-con',
   }
 ];
 
@@ -120,10 +120,15 @@ export const overlay = [
 ];
 
 export const options = {
+  data: simpleData,
   data: generatedData,
-  // categories,
-  // categoryColours,
-  // overlay,
-  showControls: true,
+  categoryColours,
+  categories,
+  overlay,
+  title: [
+    'Auto generated example chart',
+    'two line title',
+  ]
+  // showControls: false,
 }
 
