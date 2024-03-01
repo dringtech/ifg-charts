@@ -38,10 +38,33 @@
   </head>
   <body>
     <div id="timeline-chart" class="container"></div>
+    <div id="examples" class="container"></div>
     <script type="module">
       import { timeline } from '/src/charts.js';
-      import { options } from '/test.js';
+      import { options, categoryColours, overlay } from '/test.js';
       timeline("timeline-chart", options);
+
+      const examples = document.querySelector('#examples');
+
+      function createHeading(text) {
+        const h = document.createElement('h2')
+        h.innerText = text;
+        return h;
+      }
+      function createExample(obj) {
+        const e = document.createElement('pre')
+        e.innerText = JSON.stringify(obj, null, 2);
+        return e
+      }
+
+      examples.append(
+        createHeading('Data'),
+        createExample(options.data),
+        createHeading('Category Colours'),
+        createExample(categoryColours),
+        createHeading('Overlay'),
+        createExample(overlay)
+      );
     </script>
   </body>
 </html>
