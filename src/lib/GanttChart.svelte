@@ -10,11 +10,15 @@
   export let overlay;
   export let categoryName = 'default';
   export let grid = {};
+  export let margin = {};
 
   const chartWidth = getContext('width');
   const chartHeight = getContext('height');
 
-  const margin = { left: 40, top: 40, right: 40, bottom: 80 };
+  $: _margin = {
+    left: 40, top: 40, right: 40, bottom: 80,
+    ...margin,
+  };
   const DEFAULT_CATEGORY_VALUE = 'default'
 
   $: _grid = {
@@ -39,7 +43,7 @@
   )  
 
 	$: height = rowHeight * data.length;
-	$: width = chartWidth - margin.left - margin.right;
+	$: width = chartWidth - _margin.left - _margin.right;
 
 	$: xDomain = data.map((d) => [d.start, d.end]).flat();
 	$: yDomain = data.map((d, i) => i);
@@ -62,8 +66,8 @@
       o.date <= Math.max(...xScale.domain())
     )
 
-  $: calculatedTopMargin = Math.max(..._overlay.map(o => o.label.length * fontSize + 20), margin.top);
-	$: $chartHeight = height + calculatedTopMargin + margin.bottom;
+  $: calculatedTopMargin = Math.max(..._overlay.map(o => o.label.length * fontSize + 20), _margin.top);
+	$: $chartHeight = height + calculatedTopMargin + _margin.bottom;
 
   // Get list of categories
   $: categories = Array.from(
@@ -146,7 +150,7 @@
 	});
 </script>
 
-	<g transform={`translate(${margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
+	<g transform={`translate(${_margin.left}, ${calculatedTopMargin})`} font-size={ fontSize }>
 		<rect width={width} height={height} fill={ _grid.background } />
 
     {#each xScale.ticks(4) as tickValue}

@@ -2,11 +2,15 @@
   import type { TimelineEntry, OverlayEntry } from './timeline.d.ts';
   import SvgWrapper from './lib/SvgWrapper.svelte';
   import GanttChart from './lib/GanttChart.svelte';
+  import TopBar from './lib/TopBar.svelte';
   import { ImageSaver } from '@dringtech/svelte-blocks';
   import { contrastColour, highContrast } from './contrast.js';
 
   /** Data to be visualised. */
   export let data: TimelineEntry[] = [];
+
+  /** Title for chart */
+  export let title = [];
 
   /** List of categories */
   export let categories = [];
@@ -122,6 +126,7 @@
       width={ chartWidth }
       { minHeight }
       opts={ svgOpts }>
+      <TopBar { title } barHeight={ 40 }/>
       <GanttChart
         data={ _data }
         categoryName={ category }
@@ -130,6 +135,7 @@
         grid={
           { background: backgroundColour }
         }
+        margin={ { top: 90, } }
       />
     </SvgWrapper>
   </ImageSaver>
