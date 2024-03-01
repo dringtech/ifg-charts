@@ -3,6 +3,7 @@
   import SvgWrapper from './lib/SvgWrapper.svelte';
   import GanttChart from './lib/GanttChart.svelte';
   import TopBar from './lib/TopBar.svelte';
+  import BottomBar from './lib/BottomBar.svelte';
   import { ImageSaver } from '@dringtech/svelte-blocks';
   import { contrastColour, highContrast } from './contrast.js';
 
@@ -11,6 +12,9 @@
 
   /** Title for chart */
   export let title = [];
+
+  /** Notes for chart */
+  export let notes = [];
 
   /** List of categories */
   export let categories = [];
@@ -135,8 +139,9 @@
         grid={
           { background: backgroundColour }
         }
-        margin={ { top: 90, } }
+        margin={ { top: 90, bottom: 120, } }
       />
+      <BottomBar { notes } barHeight={ 40 }/>
     </SvgWrapper>
   </ImageSaver>
 </div>
