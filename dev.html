@@ -28,7 +28,7 @@
       body {
         background-color: grey;
       }
-      #timeline-chart {
+      .chart {
         background-color: paleturquoise;
       }
       #examples {
@@ -37,11 +37,15 @@
     </style>
   </head>
   <body>
-    <div id="timeline-chart" class="container"></div>
+    <div id="timeline-chart-doc" class="chart container"></div>
+    <div id="timeline-chart" class="chart container"></div>
     <div id="examples" class="container"></div>
     <script type="module">
       import { timeline } from '/src/charts.js';
-      import { options, categoryColours, overlay } from '/test.js';
+      import { options, categoryColours, overlay, documentationExample } from '/test.js';
+
+      timeline("timeline-chart-doc", documentationExample);
+
       timeline("timeline-chart", options);
 
       const examples = document.querySelector('#examples');
