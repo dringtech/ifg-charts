@@ -14,7 +14,8 @@
   export let minWidth = 3;
 
   const chartWidth = getContext('width');
-  const chartHeight = getContext('height');
+  const chartHeight = getContext('contentHeight');
+  const offset = getContext('offset');
 
   $: _margin = {
     left: 40,
@@ -175,7 +176,7 @@
 </script>
 
 <g
-  transform={`translate(${_margin.left}, ${calculatedTopMargin})`}
+  transform={`translate(${_margin.left}, ${calculatedTopMargin + $offset})`}
   font-size={fontSize}
 >
   <rect {width} {height} fill={_grid.background} />
