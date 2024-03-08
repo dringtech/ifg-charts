@@ -11,5 +11,8 @@ export default defineConfig({
       name: 'ifg-charts',
       fileName: (format) => `ifg-charts.${format}.js`
     }
+  },
+  server: {
+    open: '/dev.html',
   }
 })
