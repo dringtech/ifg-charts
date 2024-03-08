@@ -11,6 +11,7 @@
   export let categoryName = 'default';
   export let grid = {};
   export let margin = {};
+  export let minWidth = 3;
 
   const chartWidth = getContext('width');
   const chartHeight = getContext('height');
@@ -37,7 +38,7 @@
     ...categoryColours
   }
 
-  $: colour = scaleOrdinal(
+  $: colourScale = scaleOrdinal(
     [...Object.keys(_categoryColours)],
     [...Object.values(_categoryColours).map(x => x.colour || '#222')]
   )  
@@ -65,6 +66,22 @@
       o.date >= Math.min(...xScale.domain()) &&
       o.date <= Math.max(...xScale.domain())
     )
+
+  $: bars = data.map((b, idx) => {
+    const x = xScale(b.start);
+    const y = yScale(idx);
+    const width = Math.max(xScale(b.end) - xScale(b.start), minWidth);
+    const height = yScale.bandwidth();
+    const colour = colourScale(b[categoryName] || 'default');
+    return {
+      ...b,
+      x,
+      y,
+      width,
+      height,
+      colour,
+    };
+  });
 
   $: calculatedTopMargin = Math.max(..._overlay.map(o => o.label.length * fontSize + 20), _margin.top);
 	$: $chartHeight = height + calculatedTopMargin + _margin.bottom;
@@ -98,7 +115,7 @@
           x: bar.start + (bar.end - bar.start) / 2,
           textAnchor: 'middle',
           fill: _categoryColours[bar.category].contrastColour,
-          halo: colour(bar.category),
+          halo: colourScale(bar.category),
           dx: undefined,
         }
       } else if(bar.end + glow.getComputedTextLength() + fontSize > width) {
@@ -173,18 +190,19 @@
 			</g>
 		{/each}
 
-    {#each data as d, idx}
-      <rect data-start={d.start}
-            x={xScale(d.start)}
-            y={yScale(idx)}
-            width={xScale(d.end) - xScale(d.start)}
-            height={yScale.bandwidth()}
-            fill={ colour(d[categoryName] || 'default') }
-            vector-effect="non-scaling-stroke"
-      >
-        <title>{d.label}</title>
-      </rect>
-    {/each}
+  {#each bars as d, idx (idx)}
+    <rect
+      data-start={d.start}
+      x={d.x}
+      y={d.y}
+      width={d.width}
+      height={d.height}
+      fill={d.colour}
+      vector-effect="non-scaling-stroke"
+    >
+      <title>{d.label}</title>
+    </rect>
+  {/each}
 
     {#each _overlay as { date, label, colour }}
     {@const _colour = colour || 'black'}
@@ -247,7 +265,7 @@
       {@const thisCategory = _categoryColours[cat] }
       {@const offset = legendMarkerPositions[index] || { x: 0, y: 0} }
       <g transform={ `translate(${ fontSize * offset.x } ${ fontSize * offset.y })`}>
-        <rect y={ -(fontSize - 2) } width={ fontSize -2 } height={ fontSize - 2 } fill={ colour(cat) }/>
+        <rect y={ -(fontSize - 2) } width={ fontSize -2 } height={ fontSize - 2 } fill={ colourScale(cat) }/>
         <text dx={ fontSize * 1.5 } fill={ thisCategory.legendTextColour }>{ thisCategory?.label || cat }</text>
       </g>
       {/each}
