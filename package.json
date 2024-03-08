@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preserve": "npm run build",
+    "serve": "deno task serve",
+    "predeploy": "npm run build",
+    "deploy": "deployctl deploy --prod"
   },
   "devDependencies": {
     "@dringtech/svelte-blocks": "^0.2.0",

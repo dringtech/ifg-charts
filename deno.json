@@ -1,0 +1,21 @@
+{
+  "tasks": {
+    "serve": "deno run --watch --allow-read --allow-net https://deno.land/std@0.219.0/http/file_server.ts"
+  },
+  "deploy": {
+    "project": "cbab6242-a5a9-4773-9c49-40fa983b1765",
+    "exclude": [
+      "**/.vscode/**",
+      "**/node_modules",
+      "src/**",
+      ".gitignore",
+      "dev.html",
+      "jsconfig.json",
+      "package*.json",
+      "README.md",
+      "*.config.js"
+    ],
+    "include": [],
+    "entrypoint": "https://deno.land/std@0.219.0/http/file_server.ts"
+  }
+}
