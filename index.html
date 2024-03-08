@@ -5,6 +5,9 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gantt Chart Example Embed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
       html {
@@ -18,6 +21,7 @@
         max-width: 80rem;
         margin-inline: auto;
         padding: 10px;
+        background: lightgray;
       }
       .controls {
         display: flex;
@@ -38,33 +42,23 @@
   </head>
   <body>
     <div id="timeline-chart" class="container"></div>
+
+    <div class="container">
+      <h2>Interface</h2>
+      <p>The timeline chart component takes two parameters:</p>
+      <pre>timeline(targetId, options);</pre>
+      <p>
+        The <code>targetId</code> is the id of the Element which the compnent should be inserted into.
+        The containing element will remain.
+      </p>
+      <p>
+        The <code>options</code> parameter is an object of the following form.
+        This is documented in the <a href="test.js">test.js</a> file, which also
+        exports some generated test data:
+      </p>
+      <pre><code id="documented-example" class="language-javascript"></code></pre>
+    </div>
     <div id="examples" class="container"></div>
-    <script type="module">
-      import { timeline } from '/dist/ifg-charts.es.js';
-      import { options, categoryColours, overlay } from '/test.js';
-      timeline("timeline-chart", options);
-
-      const examples = document.querySelector('#examples');
-
-      function createHeading(text) {
-        const h = document.createElement('h2')
-        h.innerText = text;
-        return h;
-      }
-      function createExample(obj) {
-        const e = document.createElement('pre')
-        e.innerText = JSON.stringify(obj, null, 2);
-        return e
-      }
-
-      examples.append(
-        createHeading('Data'),
-        createExample(options.data),
-        createHeading('Category Colours'),
-        createExample(categoryColours),
-        createHeading('Overlay'),
-        createExample(overlay)
-      );
-    </script>
+    <script type="module" src="example.js"></script>
   </body>
 </html>

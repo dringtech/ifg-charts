@@ -136,3 +136,53 @@ export const options = {
   // showControls: false,
 }
 
+export const documentationExample = {
+  // title and notes will appear at the top and bottom respectively. Max two lines of each.
+  title: ["First line of title", "Second line of title"],
+  notes: ["First line of notes", "Second line of notes"],
+
+  // data to enter into the timeline
+  data: [
+    // start, end and label are used to draw bars.
+    // Additional properties can be used for category colouring
+    {
+      start: "2024-01-01", end: "2024-02-01", label: "First bar",
+      "Party Affiliation": "party-lab", Gender: "gender-male"
+    }, {
+      start: "2024-02-01", end: "2024-03-01", label: "Second bar",
+      "Party Affiliation": "party-con", Gender: "gender-female"
+    }, {
+      start: "2024-03-01", end: "2024-03-01T01:00:00", label: "Narrow Bar (min 3px)",
+      "Party Affiliation": "party-lab", Gender: "gender-female"
+    },
+  ],
+
+  // Categories values should match names of additional properties in data above
+  categories: ['Party Affiliation', 'Gender'],
+
+  // Category colour object keys should match values used in additional properties
+  categoryColours: {
+    "party-lab": { colour: "#ee3224", label: "Labour" },
+    "party-con": { colour: "#00539f", label: "Conservative" },
+    "gender-male": { colour: "#00c7b1", label: "Male" },
+    "gender-female": { colour: "#84329b", label: "Female" },
+  },
+
+  // overlay defines annotation lines
+  overlay: [
+    // string labels will be split on whitespace to put on multiple lines
+    { date: "2024-01-10", label: "Auto-split label" },
+    // array labels displayed on as many lines
+    { date: "2024-01-20", label: ["Line one", "line two"] },
+    // colours can be set to any CSS colour
+    { date: "2024-02-10", label: "Colored", colour: "#c1c5c8" },
+    // persistent labels will always be shown
+    { date: "2024-02-20", label: "Persistent", persist: true }
+  ],
+
+  chartWidth: 800, // Width of chart
+  minHeight: 300,  // Minimum height of chart
+
+  showControls: true,  // Whether or not to show controls on the chart
+  showOverlay: true,   // Show or hide the non-persistent overlay items
+};
