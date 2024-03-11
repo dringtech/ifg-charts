@@ -36,6 +36,20 @@
   export let chartWidth = 800;
   export let minHeight = 200;
 
+  /** Style overrides */
+  export let fontStack = '"Open Sans", sans-serif';
+  export let style = `
+    @font-face {
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 300 800;
+      font-stretch: 100%;
+      font-display: swap;
+      src: url(https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-mu0SC55I.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+  `;
+
   /**
    * A generated id that uniquely identifies the component.
    * Mainly used in input to label bindings
@@ -80,7 +94,8 @@
   $: svgOpts = {
     'stroke-linecap': 'round',
     'stroke-linejoin': 'round',
-    style:`background:${ backgroundColour };`
+    'font-stack': fontStack, 
+    style:`background:${ backgroundColour };`,
   }
 </script>
 
@@ -99,7 +114,7 @@
     ></Timeline>
     ```
 -->
-<div class="chart">
+<div class="ifg-chart">
   {#if showControls }
   <div class="controls">
     {#if _overlay.length > 0}
@@ -129,6 +144,7 @@
     <SvgWrapper
       width={ chartWidth }
       { minHeight }
+      style={ style }
       opts={ svgOpts }>
       <TopBar { title } barHeight={ 40 }/>
       <GanttChart

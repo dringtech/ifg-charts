@@ -4,6 +4,7 @@
   export let width = 800;
   export let minHeight = 300;
   export let opts = {};
+  export let style;
 
   const contentHeight = writable(minHeight);
   const viewHeight = derived(
@@ -23,5 +24,6 @@
 </script>
 
 <svg viewBox={`0 0 ${width} ${$viewHeight}`} { ...opts }>
+  {#if style}{@html `<style>${ style }</style>`}{/if}
   <slot></slot>
 </svg>
