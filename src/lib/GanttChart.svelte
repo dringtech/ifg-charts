@@ -251,21 +251,13 @@
           dy={yScale.bandwidth() / 2}
           text-anchor={labelConfig?.textAnchor}
           dominant-baseline="middle"
-          stroke-width={fontSize}
-          stroke={labelConfig?.halo || _grid.background}
-          text-rendering="optimizeLegibility"
-          vector-effect="non-scaling-stroke"
-        >
-          {d.label}
-        </text>
-        <text
-          dx={labelConfig?.dx}
-          dy={yScale.bandwidth() / 2}
-          text-anchor={labelConfig?.textAnchor}
-          dominant-baseline="middle"
           fill={labelConfig?.fill}
           text-rendering="optimizeLegibility"
           vector-effect="non-scaling-stroke"
+          paint-order="stroke"
+          stroke-width={fontSize}
+          stroke-opacity={ 0.7 }
+          stroke={labelConfig?.halo || _grid.background}
         >
           {d.label}
         </text>
