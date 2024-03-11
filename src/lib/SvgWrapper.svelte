@@ -1,6 +1,6 @@
 <script>
   import { setContext } from 'svelte';
-  import { readable, writable, derived } from 'svelte/store';
+  import { writable, derived } from 'svelte/store';
   export let width = 800;
   export let minHeight = 300;
   export let opts = {};
@@ -19,8 +19,6 @@
     ([$contentHeight, $viewHeight]) => ($viewHeight - $contentHeight) / 2
   )
   setContext('offset', offset);
-  // (($viewHeight - $contentHeight) / 2);
-  // $: setContext('offset', );
 </script>
 
 <svg viewBox={`0 0 ${width} ${$viewHeight}`} { ...opts }>
