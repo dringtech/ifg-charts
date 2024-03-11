@@ -38,6 +38,7 @@
     [DEFAULT_CATEGORY_VALUE]: {
       colour: '#aaa',
       label: 'Unknown',
+      contrastColour: '#000',
     },
     ...categoryColours,
   };
@@ -109,7 +110,7 @@
 
     for (const i in labels) {
       const l = labels[i];
-      const [glow, label] = Array.from(l.querySelectorAll('text'));
+      const [label] = Array.from(l.querySelectorAll('text'));
 
       const bar = {
         start: xScale(data[i].start),
@@ -117,15 +118,15 @@
         category: data[i][categoryName],
       };
       let labelConfig;
-      if (bar.end - bar.start - fontSize > glow.getComputedTextLength()) {
+      if (bar.end - bar.start - fontSize > label.getComputedTextLength()) {
         labelConfig = {
           x: bar.start + (bar.end - bar.start) / 2,
           textAnchor: 'middle',
-          fill: _categoryColours[bar.category].contrastColour,
+          fill: _categoryColours[bar.category || DEFAULT_CATEGORY_VALUE].contrastColour,
           halo: colourScale(bar.category),
           dx: undefined,
         };
-      } else if (bar.end + glow.getComputedTextLength() + fontSize > width) {
+      } else if (bar.end + label.getComputedTextLength() + fontSize > width) {
         labelConfig = {
           x: bar.start,
           textAnchor: 'end',
@@ -265,7 +266,7 @@
     {/each}
   </g>
 
-  {#if categories.length > 1}
+  {#if categories.length > 0}
     <g transform={`translate(0, ${height + 50})`} bind:this={legendEl}>
       <text>Legend:</text>
       {#each categories as cat, index}
