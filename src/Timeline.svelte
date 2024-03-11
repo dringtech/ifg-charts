@@ -34,7 +34,7 @@
 
   /** Width of chart in pixels */
   export let chartWidth = 800;
-  export let minHeight = 300;
+  export let minHeight = 200;
 
   /**
    * A generated id that uniquely identifies the component.
