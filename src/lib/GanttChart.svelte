@@ -12,6 +12,8 @@
   export let grid = {};
   export let margin = {};
   export let minWidth = 3;
+  export let startDate = undefined;
+  export let endDate = undefined;
 
   const chartWidth = getContext('width');
   const chartHeight = getContext('contentHeight');
@@ -55,7 +57,7 @@
   $: yDomain = data.map((d, i) => i);
 
   $: xScale = scaleTime()
-    .domain([Math.min.apply(null, xDomain), Math.max.apply(null, xDomain)])
+    .domain([startDate|| Math.min.apply(null, xDomain), endDate || Math.max.apply(null, xDomain)])
     .range([0, width])
     .nice();
   $: yScale = scaleBand()

@@ -36,6 +36,10 @@
   export let chartWidth = 800;
   export let minHeight = 200;
 
+  /** Start and end date overrides */
+  export let startDate = undefined;
+  export let endDate = undefined;
+
   /** Style overrides */
   export let fontStack = '"Open Sans", sans-serif';
   export let style = `
@@ -149,6 +153,8 @@
       <TopBar { title } barHeight={ 40 }/>
       <GanttChart
         data={ _data }
+        startDate={ startDate && new Date(startDate) }
+        endDate={ endDate && new Date(endDate) }
         categoryName={ category }
         categoryColours={ _categoryColours }
         overlay={ _overlay }

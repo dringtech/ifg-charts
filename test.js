@@ -157,6 +157,9 @@ export const documentationExample = {
     },
   ],
 
+  startDate: "2023-12-01",
+  endDate: "2024-04-30",
+
   // Categories values should match names of additional properties in data above
   categories: ['Party Affiliation', 'Gender'],
 
