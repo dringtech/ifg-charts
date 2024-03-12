@@ -1,4 +1,5 @@
 import Timeline from './Timeline.svelte'
+import { categoryColours } from "./lib/categoryColours.js"
 
 export function timeline(
   targetId,
@@ -9,3 +10,7 @@ export function timeline(
     props: options
   })
 }
+
+export {
+  categoryColours
+};
