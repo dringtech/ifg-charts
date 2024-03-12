@@ -60,6 +60,8 @@
     .domain([startDate|| Math.min.apply(null, xDomain), endDate || Math.max.apply(null, xDomain)])
     .range([0, width])
     .nice();
+  $: [earliestDate, latestDate] = xScale.domain()
+
   $: yScale = scaleBand()
     .domain(yDomain)
     .range([0, rowHeight * data.length])
@@ -67,14 +69,16 @@
 
   $: _overlay = overlay.filter(
     (o) =>
-      o.date >= Math.min(...xScale.domain()) &&
-      o.date <= Math.max(...xScale.domain())
+      (o.date >= earliestDate) &&
+      (o.date <= latestDate)
   );
 
   $: bars = data.map((b, idx) => {
-    const x = xScale(b.start);
+    const barStartDate = Math.max(b.start, earliestDate);
+    const barEndDate = Math.min(b.end, latestDate);
+    const x = xScale(barStartDate);
     const y = yScale(idx);
-    const width = Math.max(xScale(b.end) - xScale(b.start), minWidth);
+    const width = Math.max(xScale(barEndDate) - x, minWidth);
     const height = yScale.bandwidth();
     const colour = colourScale(b[categoryName] || 'default');
     return {
@@ -115,20 +119,20 @@
       const [label] = Array.from(l.querySelectorAll('text'));
 
       const bar = {
-        start: xScale(data[i].start),
-        end: xScale(data[i].end),
+        start: bars[i].x,
+        width: bars[i].width,
         category: data[i][categoryName],
       };
       let labelConfig;
-      if (bar.end - bar.start - fontSize > label.getComputedTextLength()) {
+      if (bar.width - fontSize > label.getComputedTextLength()) {
         labelConfig = {
-          x: bar.start + (bar.end - bar.start) / 2,
+          x: bar.start + bar.width / 2,
           textAnchor: 'middle',
           fill: _categoryColours[bar.category || DEFAULT_CATEGORY_VALUE].contrastColour,
           halo: colourScale(bar.category),
           dx: undefined,
         };
-      } else if (bar.end + label.getComputedTextLength() + fontSize > width) {
+      } else if (bar.start + bar.width + label.getComputedTextLength() + fontSize > width) {
         labelConfig = {
           x: bar.start,
           textAnchor: 'end',
@@ -137,7 +141,7 @@
         };
       } else {
         labelConfig = {
-          x: bar.end,
+          x: bar.start + bar.width,
           dx: fontSize / 2,
           textAnchor: 'start',
           halo: _grid.background,
