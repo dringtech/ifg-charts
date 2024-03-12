@@ -197,7 +197,6 @@
         dominant-baseline="hanging"
         fill={_grid.colour}
         text-rendering="optimizeLegibility"
-        vector-effect="non-scaling-stroke"
       >
         {xFormatter(tickValue)}
       </text>
@@ -234,7 +233,6 @@
         text-anchor="middle"
         dominant-baseline="text-top"
         text-rendering="optimizeLegibility"
-        vector-effect="non-scaling-stroke"
       >
         {#each label.toReversed() as line, idx}
           <tspan x="0" y={-idx * fontSize}>{line}</tspan>
@@ -254,11 +252,10 @@
           dominant-baseline="middle"
           fill={labelConfig?.fill}
           text-rendering="optimizeLegibility"
-          vector-effect="non-scaling-stroke"
           paint-order="stroke"
-          stroke-width={fontSize}
+          stroke-width={fontSize / 2}
           stroke-opacity={ 0.7 }
-          stroke={labelConfig?.halo || _grid.background}
+          stroke={ labelConfig?.halo || _grid.background}
         >
           {d.label}
         </text>
