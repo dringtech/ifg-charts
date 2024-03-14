@@ -17,8 +17,7 @@
   export let notes = [];
 
   /** List of categories */
-  export let categories = [];
-  // TODO Convert to list of objects with id and optional label
+  export let categories: Record<string, { label?: string }> = {};
 
   /** Mapping of categories to colours */
   export let categoryColours = {};
@@ -66,7 +65,7 @@
    * The currently selected category. Defaults to the first category
    * if categories are provided or `undefined` if not.
    */
-  let category = categories[0] || undefined;
+  let category = Object.keys(categories)[0] || undefined;
 
   /** Image saver reference */
   let saver: ImageSaver;
@@ -85,6 +84,14 @@
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
   })).filter(o => showOverlay || o.persist)
+
+  $: _categories = Object.entries(categories).reduce(
+    (c, [k, v]) => ({
+      ...c,
+      [k]: { label: k, ...v }
+    }),
+    {}
+  ) as Record<string, { label: string }>;
 
   $: _categoryColours = Object.entries(categoryColours).reduce((a, [k, c]) => ({
     ...a,
@@ -127,12 +134,12 @@
       <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ showOverlay }>
     </div>
     {/if}
-    {#if categories.length > 1}
+    {#if Object.keys(_categories).length > 1}
     <div>
       <label for={ `${id}-category-selector` }>Colour by category</label>
       <select id={ `${id}-category-selector` } bind:value={ category }>
-        {#each categories as cat, i (cat)}
-        <option>{ cat }</option>
+        {#each Object.entries(_categories) as [catId, cat] (catId)}
+        <option value={ catId }>{ cat.label }</option>
         {/each}
       </select>
     </div>

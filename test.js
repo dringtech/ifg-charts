@@ -110,7 +110,11 @@ export const generatedData = Array.from(Array(10)).map((_, i) => ({
   'Ministerial rank': rankGen.next().value,
 }));
 
-export const categories = [ 'Party affiliation', 'Gender', 'Ministerial rank' ];
+export const categories = {
+  'Party affiliation': {},
+  'Gender': {},
+  'Ministerial rank': {}
+};
 
 export const overlay = [
   { date: '2019-11-12', label: 'General Election 2019' },
@@ -147,21 +151,25 @@ export const documentationExample = {
     // Additional properties can be used for category colouring
     {
       start: "2024-01-01", end: "2024-02-01", label: "First bar",
-      "Party Affiliation": "party-lab", Gender: "gender-male"
+      party: "party-lab", gender: "gender-male"
     }, {
       start: "2024-02-01", end: "2024-03-01", label: "Second bar",
-      "Party Affiliation": "party-con", Gender: "gender-female"
+      party: "party-con", gender: "gender-female"
     }, {
       start: "2024-03-01", end: "2024-03-01T01:00:00", label: "Narrow Bar (min 3px)",
-      "Party Affiliation": "party-lab", Gender: "gender-female"
+      party: "party-lab", gender: "gender-female"
     },
   ],
 
   startDate: "2023-12-01",
   endDate: "2024-04-30",
 
-  // Categories values should match names of additional properties in data above
-  categories: ['Party Affiliation', 'Gender'],
+  // Categories keys should match names of additional properties in data above
+  // an optional label can be provided for labelling.
+  categories: {
+    party: { label: 'Party'},
+    gender: { label: 'Gender'},
+  },
 
   // Category colour object keys should match values used in additional properties
   categoryColours: {
