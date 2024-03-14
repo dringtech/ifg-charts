@@ -173,7 +173,11 @@
         categoryColours={ _categoryColours }
         overlay={ _overlay }
         grid={
-          { background: backgroundColour }
+          {
+            background: backgroundColour,
+            colour: '#F3F3F4',
+            labelColour: '#333F48',
+          }
         }
         margin={ { top: 90, bottom: 120, } }
       />

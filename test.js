@@ -188,7 +188,7 @@ export const documentationExample = {
     // colours can be set to any CSS colour
     { date: "2024-02-10", label: "Colored", colour: "#c1c5c8" },
     // persistent labels will always be shown
-    { date: "2024-02-20", label: "Persistent", persist: true }
+    { date: "2024-02-20", label: "Persistent", persist: true, colour: "#8d949a" }
   ],
 
   chartWidth: 1024, // Width of chart

@@ -30,6 +30,7 @@
 
   $: _grid = {
     colour: '#999',
+    labelColour: '#999',
     width: '1',
     dashArray: 'none',
     background: 'white',
@@ -201,7 +202,7 @@
         transform={`translate(0,${height + 5})`}
         text-anchor="middle"
         dominant-baseline="hanging"
-        fill={_grid.colour}
+        fill={_grid.labelColour}
         text-rendering="optimizeLegibility"
       >
         {xFormatter(tickValue)}
