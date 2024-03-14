@@ -140,6 +140,7 @@
           textAnchor: 'end',
           dx: -fontSize / 2,
           halo: _grid.background,
+          fill: _categoryColours[bar.category || DEFAULT_CATEGORY_VALUE].legendTextColour || 'black',
         };
       } else {
         labelConfig = {
@@ -147,6 +148,7 @@
           dx: fontSize / 2,
           textAnchor: 'start',
           halo: _grid.background,
+          fill: _categoryColours[bar.category || DEFAULT_CATEGORY_VALUE].legendTextColour || 'black',
         };
       }
       labelPositions = [...labelPositions, labelConfig];
