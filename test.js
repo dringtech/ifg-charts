@@ -196,4 +196,11 @@ export const documentationExample = {
 
   showControls: true,  // Whether or not to show controls on the chart
   showOverlay: true,   // Show or hide the non-persistent overlay items
+
+  labels: {
+    overlay: "Show general elections",
+    category: "Colour by",
+    image: "Download as image",
+    svg: "Download as SVG",
+  }
 };

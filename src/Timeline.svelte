@@ -25,6 +25,13 @@
   /** Array of key dates to display on the chart */
   export let overlay: OverlayEntry[] = [];
 
+  export let labels: {
+    overlay?: string,
+    category?: string,
+    image?: string,
+    svg?: string,
+  } = {};
+
   /** Toggle to define if controls are shown */
   export let showControls = true;
 
@@ -130,13 +137,13 @@
   <div class="controls">
     {#if _overlay.length > 0}
     <div>
-      <label for={ `${id}-marker-toggle` }>Show markers</label>
+      <label for={ `${id}-marker-toggle` }>{ labels.overlay || "Show overlay" }</label>
       <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ showOverlay }>
     </div>
     {/if}
     {#if Object.keys(_categories).length > 1}
     <div>
-      <label for={ `${id}-category-selector` }>Colour by category</label>
+      <label for={ `${id}-category-selector` }>{ labels.category || "Category" }</label>
       <select id={ `${id}-category-selector` } bind:value={ category }>
         {#each Object.entries(_categories) as [catId, cat] (catId)}
         <option value={ catId }>{ cat.label }</option>
@@ -145,8 +152,8 @@
     </div>
     {/if}
     <div>
-      <button on:click={ () => saver.exportPNG('timeline.png') }>Save image</button>
-      <button on:click={ () => saver.exportSVG('timeline.svg') }>Save SVG</button>
+      <button on:click={ () => saver.exportPNG('timeline.png') }>{ labels.image || "Save image" }</button>
+      <button on:click={ () => saver.exportSVG('timeline.svg') }>{ labels.svg || "Save SVG" }</button>
     </div>
   </div>
   {/if}
