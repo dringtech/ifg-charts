@@ -191,8 +191,8 @@ export const documentationExample = {
     { date: "2024-02-20", label: "Persistent", persist: true }
   ],
 
-  chartWidth: 800, // Width of chart
-  minHeight: 300,  // Minimum height of chart
+  chartWidth: 1024, // Width of chart
+  minHeight: 200,  // Minimum height of chart
 
   showControls: true,  // Whether or not to show controls on the chart
   showOverlay: true,   // Show or hide the non-persistent overlay items

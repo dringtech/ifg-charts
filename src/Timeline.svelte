@@ -39,7 +39,7 @@
   export let showOverlay = true;
 
   /** Width of chart in pixels */
-  export let chartWidth = 800;
+  export let chartWidth = 1024;
   export let minHeight = 200;
 
   /** Start and end date overrides */
