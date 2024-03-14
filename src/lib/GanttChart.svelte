@@ -1,6 +1,7 @@
 <script>
   import { scaleBand, scaleTime, scaleOrdinal } from 'd3-scale';
   import { afterUpdate, getContext } from 'svelte';
+  import Legend from './Legend.svelte';
 
   export let data;
   export let fontSize = 10;
@@ -152,34 +153,8 @@
     }
   }
 
-  /**
-   * Automatically re-assigns legend item positioning based on longest item.
-   */
-  let legendEl;
-  let legendMarkerPositions = [];
-
-  function setLegendItemWidth() {
-    if (!legendEl) return;
-    const legendItems = Array.from(
-      legendEl?.querySelectorAll('g').values() || []
-    );
-    legendMarkerPositions = [];
-    const xGutter = 5;
-    let x = xGutter;
-    let y = 0;
-    for (const idx in legendItems) {
-      legendMarkerPositions = [...legendMarkerPositions, { x, y }];
-      x += legendItems[idx].getBBox().width / fontSize + 1;
-      if (x * fontSize > width) {
-        x = xGutter;
-        y += 1.5;
-      }
-    }
-  }
-
   afterUpdate(() => {
     calculateLabelPositions();
-    setLegendItemWidth();
   });
 </script>
 
@@ -269,27 +244,14 @@
       </g>
     {/each}
   </g>
-
   {#if categories.length > 0}
-    <g transform={`translate(0, ${height + 50})`} bind:this={legendEl}>
-      <text>Legend:</text>
-      {#each categories as cat, index}
-        {@const thisCategory = _categoryColours[cat]}
-        {@const offset = legendMarkerPositions[index] || { x: 0, y: 0 }}
-        <g
-          transform={`translate(${fontSize * offset.x} ${fontSize * offset.y})`}
-        >
-          <rect
-            y={-(fontSize - 2)}
-            width={fontSize - 2}
-            height={fontSize - 2}
-            fill={colourScale(cat)}
-          />
-          <text dx={fontSize * 1.5} fill={thisCategory.legendTextColour}
-            >{thisCategory?.label || cat}</text
-          >
-        </g>
-      {/each}
-    </g>
+  <Legend
+    categories={ categories }
+    fontSize={ fontSize }
+    colourScale={ colourScale }
+    width={ width }
+    top={ height + 50 }
+    categoryColours={ _categoryColours }
+  />
   {/if}
 </g>
