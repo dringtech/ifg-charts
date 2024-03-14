@@ -156,7 +156,7 @@ export const documentationExample = {
       start: "2024-02-01", end: "2024-03-01", label: "Second bar",
       party: "party-con", gender: "gender-female"
     }, {
-      start: "2024-03-01", end: "2024-03-01T01:00:00", label: "Narrow Bar (min 3px)",
+      start: "2024-03-01", end: "2024-03-01T01:00:00", label: "Narrow Bar (min 1.5px)",
       party: "party-lab", gender: "gender-female"
     },
   ],

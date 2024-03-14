@@ -11,7 +11,7 @@
   export let categoryName = 'default';
   export let grid = {};
   export let margin = {};
-  export let minWidth = 3;
+  export let minWidth = 1.5;
   export let startDate = undefined;
   export let endDate = undefined;
 
