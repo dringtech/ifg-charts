@@ -164,7 +164,7 @@
       { minHeight }
       style={ style }
       opts={ svgOpts }>
-      <TopBar { title } barHeight={ 40 }/>
+      <TopBar { title } fontSize={ 20 }/>
       <GanttChart
         data={ _data }
         startDate={ startDate && new Date(startDate) }

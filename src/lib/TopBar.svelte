@@ -1,14 +1,16 @@
 <script>
   import { getContext } from 'svelte';
 
-  export let barHeight = 43.4;
+  export let fontSize = 20;
   export let title = [];
 
   const width = getContext('width');
   const lineSpacing = 1.1;
+  const flashWidth = 15;
 
-  $: fontSize = 1 / (title.length + 1);
-  $: titleOffset = (1 - (fontSize * title.length * lineSpacing)) / 2;
+  $: barHeight = fontSize * (Math.max(title.length, 1) + 1);
+  $: titleOffset = (fontSize * (title.length * (1 - lineSpacing) + 1)) / 2;
+  $: flashSlope = barHeight * 0.7;
 </script>
 
 <g>
@@ -16,8 +18,8 @@
   <text
       fill="#ffffff"
       font-size={ fontSize }
-      transform={ `scale(${ barHeight }) translate(0.3 ${ titleOffset })` }
-      font-weight='bold'
+      transform={ `translate(16 ${titleOffset})` }
+      font-weight='600'
       dominant-baseline='hanging'
     >
     {#each title as line, idx (idx) }
@@ -27,8 +29,7 @@
     {/each}
   </text>
 
-  <g transform={ `translate(${width - barHeight * 2 })` }>
-    <!-- 12.8 -->
+  <g transform={`translate(${width - 40})`}>
     <defs>
       <linearGradient id="flash" gradientTransform="rotate(90)">
         <stop offset="0%" stop-color="#00A8E1" />
@@ -36,11 +37,10 @@
       </linearGradient>
     </defs>
     <path
-      transform={`scale(${barHeight})`}
-      d={`m0,0 h0.3 L1,1 h-0.3 z`}
+      d={`M${-flashSlope - flashWidth},0 h${flashWidth} l${flashSlope},${barHeight} h${-flashWidth} z`}
       fill="url(#flash)"
     />
-    <g transform={ `scale(${ barHeight / 43.4 }) translate(45 12)`}>
+    <g transform={`translate(0 ${(barHeight - 20) / 2})`}>
       <path
         d="m 0,0 c 0.6,-0.1 1.2,-0.1 1.8,-0.1 0.6,0 1.2,0 1.8,0.1 v 17.8 c -0.6,0.1 -1.2,0.2 -1.8,0.2 -0.6,0 -1.2,-0.1 -1.8,-0.2 z"
         fill="#ffffff"
