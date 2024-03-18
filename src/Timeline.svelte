@@ -179,6 +179,7 @@
         categoryName={ category }
         categoryColours={ _categoryColours }
         overlay={ _overlay }
+        fontSize={ 16 }
         grid={
           {
             background: backgroundColour,

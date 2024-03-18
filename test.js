@@ -131,7 +131,7 @@ export const options = {
   overlay,
   title: [
     'Auto generated example chart',
-    'two line title',
+    // 'two line title',
   ],
   notes: [
     'Source: Institute for Government analysis of [publisher], [dataset], [time period]',
