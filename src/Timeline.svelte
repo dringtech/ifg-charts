@@ -115,6 +115,7 @@
     'font-stack': fontStack, 
     style:`background:${ backgroundColour };`,
   }
+  let topBar;
 </script>
 
 <!-- 
@@ -164,7 +165,8 @@
       { minHeight }
       style={ style }
       opts={ svgOpts }>
-      <TopBar { title } fontSize={ 20 }/>
+      <TopBar { title } fontSize={ 20 } bind:this={topBar}/>
+      <g transform={ `translate(0 ${ topBar?.barHeight || 0 })` }>        
       <GanttChart
         data={ _data }
         startDate={ startDate && new Date(startDate) }
@@ -181,6 +183,7 @@
         }
         margin={ { top: 90, bottom: 120, } }
       />
+      </g>
       <BottomBar { notes } barHeight={ 40 }/>
     </SvgWrapper>
   </ImageSaver>

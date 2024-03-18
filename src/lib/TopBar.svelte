@@ -7,11 +7,13 @@
   const width = getContext('width');
   const lineSpacing = 1.1;
   const flashWidth = 15;
+  export let barHeight;
 
   $: barHeight = fontSize * (Math.max(title.length, 1) + 1);
   $: titleOffset = (fontSize * (title.length * (1 - lineSpacing) + 1)) / 2;
   $: flashSlope = barHeight * 0.7;
 </script>
+<svelte:options accessors />
 
 <g>
   <rect {width} height={ barHeight } fill="#001e62" />
