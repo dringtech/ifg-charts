@@ -5,7 +5,7 @@
 
   export let data;
   export let fontSize = 10;
-  export let rowHeight = 25; // Row height 25px
+  export let rowHeight = fontSize * 2.1; // Row height 25px
   export let rowPadding = 0.25; // 25% top and 25% bottom = 50%
   export let categoryColours = {};
   export let overlay;
@@ -15,16 +15,17 @@
   export let minWidth = 1.5;
   export let startDate = undefined;
   export let endDate = undefined;
+  export let minHeight = 150;
 
   const chartWidth = getContext('width');
   export let chartHeight = 0;
   // const offset = getContext('offset');
 
   $: _margin = {
-    left: 40,
-    top: 40,
-    right: 40,
-    bottom: 80,
+    left: fontSize * 4,
+    right: fontSize * 4,
+    top: fontSize * 3,
+    bottom: fontSize * 5,
     ...margin,
   };
   const DEFAULT_CATEGORY_VALUE = 'default';
@@ -52,7 +53,8 @@
     [...Object.values(_categoryColours).map((x) => x.colour || '#222')]
   );
 
-  $: height = rowHeight * data.length;
+  $: height = Math.max(rowHeight * data.length, minHeight);
+  $: barOffset = Math.max(0, (height - rowHeight * data.length) / 2)
   $: width = chartWidth - _margin.left - _margin.right;
 
   $: xDomain = data.map((d) => [d.start, d.end]).flat();
@@ -177,7 +179,7 @@
         vector-effect="non-scaling-stroke"
       />
       <text
-        transform={`translate(0,${height + 5})`}
+        transform={`translate(0,${height + fontSize / 2 })`}
         text-anchor="middle"
         dominant-baseline="hanging"
         fill={_grid.labelColour}
@@ -192,7 +194,7 @@
     <rect
       data-start={d.start}
       x={d.x}
-      y={d.y}
+      y={d.y + barOffset}
       width={d.width}
       height={d.height}
       fill={d.colour}
@@ -232,7 +234,7 @@
       <g transform={`translate(${labelConfig?.x || 0} ${yScale(idx)})`}>
         <text
           dx={labelConfig?.dx}
-          dy={yScale.bandwidth() / 2}
+          dy={yScale.bandwidth() / 2 + barOffset}
           text-anchor={labelConfig?.textAnchor}
           dominant-baseline="middle"
           fill={labelConfig?.fill}
