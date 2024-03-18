@@ -17,8 +17,8 @@
   export let endDate = undefined;
 
   const chartWidth = getContext('width');
-  const chartHeight = getContext('contentHeight');
-  const offset = getContext('offset');
+  export let chartHeight = 0;
+  // const offset = getContext('offset');
 
   $: _margin = {
     left: 40,
@@ -97,7 +97,7 @@
     ..._overlay.map((o) => o.label.length * fontSize + 20),
     _margin.top
   );
-  $: $chartHeight = height + calculatedTopMargin + _margin.bottom;
+  $: chartHeight = height + calculatedTopMargin + _margin.bottom;
 
   // Get list of categories
   $: categories = Array.from(
@@ -159,9 +159,10 @@
     calculateLabelPositions();
   });
 </script>
+<svelte:options accessors />
 
 <g
-  transform={`translate(${_margin.left}, ${calculatedTopMargin + $offset})`}
+  transform={`translate(${_margin.left}, ${calculatedTopMargin})`}
   font-size={fontSize}
 >
   <rect {width} {height} fill={_grid.background} />

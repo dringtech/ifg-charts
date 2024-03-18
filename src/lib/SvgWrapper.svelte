@@ -1,27 +1,19 @@
 <script>
   import { setContext } from 'svelte';
-  import { writable, derived } from 'svelte/store';
+  import { derived, writable } from 'svelte/store';
   export let width = 800;
-  export let minHeight = 300;
+  export let height = 0;
   export let opts = {};
   export let style;
 
-  const contentHeight = writable(minHeight);
-  const viewHeight = derived(
-    contentHeight,
-    ($contentHeight) => Math.max($contentHeight, minHeight)
-  )
-  setContext('width', width);
-  setContext('contentHeight', contentHeight);
-  setContext('height', viewHeight);
+  let heightStore = writable(height);
+  $: $heightStore = height;
 
-  const offset = derived([ contentHeight, viewHeight ],
-    ([$contentHeight, $viewHeight]) => ($viewHeight - $contentHeight) / 2
-  )
-  setContext('offset', offset);
+  setContext('width', width);
+  setContext('height', derived(heightStore, $s => $s));
 </script>
 
-<svg viewBox={`0 0 ${width} ${$viewHeight}`} { ...opts }>
+<svg viewBox={`0 0 ${width} ${$heightStore || 0}`} { ...opts }>
   {#if style}{@html `<style>${ style }</style>`}{/if}
   <slot></slot>
 </svg>

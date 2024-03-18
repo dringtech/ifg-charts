@@ -116,6 +116,11 @@
     style:`background:${ backgroundColour };`,
   }
   let topBar;
+  let chart;
+  let bottomBar;
+
+  $: chartOffset = topBar?.barHeight || 0;
+  $: height = chartOffset + chart?.chartHeight + bottomBar?.barHeight;
 </script>
 
 <!-- 
@@ -162,11 +167,11 @@
   <ImageSaver bind:this={ saver }>
     <SvgWrapper
       width={ chartWidth }
-      { minHeight }
+      { height }
       style={ style }
       opts={ svgOpts }>
       <TopBar { title } fontSize={ 20 } bind:this={topBar}/>
-      <g transform={ `translate(0 ${ topBar?.barHeight || 0 })` }>        
+      <g transform={ `translate(0 ${ chartOffset })` }>
       <GanttChart
         data={ _data }
         startDate={ startDate && new Date(startDate) }
@@ -181,10 +186,10 @@
             labelColour: '#333F48',
           }
         }
-        margin={ { top: 90, bottom: 120, } }
+        bind:this={chart}
       />
       </g>
-      <BottomBar { notes } barHeight={ 40 }/>
+      <BottomBar { notes } fontSize={ 16 } bind:this={ bottomBar }/>
     </SvgWrapper>
   </ImageSaver>
 </div>

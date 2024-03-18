@@ -1,20 +1,22 @@
 <script>
   import { getContext } from 'svelte';
 
-  export let barHeight = 40;
+  export let fontSize = 15;
   export let notes = [];
 
   const width = getContext('width');
   const height = getContext('height');
+  const notesOffset = 10.25;
 
   let lineSpacing = 1.1;
-  $: fontSize = barHeight / 3;
-  $: notesOffset = (barHeight - (fontSize * 2 * lineSpacing)) / 2;
+  export let barHeight = 0;
+  $: barHeight = notesOffset * 2 + fontSize * lineSpacing * notes.length;
 </script>
-<g transform={ `translate(0 ${ $height - barHeight })` }>
+<svelte:options accessors />
+<g transform={ `translate(0 ${ ($height || 0) - barHeight })` }>
   <line x2={ width } stroke='#001e62' stroke-width='2' />
   <g
-    transform={ `translate(${ width }) scale(${ barHeight / 40 }) translate(-60 10)` }
+    transform={ `translate(${ width - 60} 10)` }
     fill="#001e62"
   >
     <g>
@@ -36,7 +38,7 @@
   <text font-size={ fontSize } fill="#001e62" dominant-baseline="hanging" >
     {#each notes as line, idx (idx)}
     <tspan
-      x="15"
+      x="16"
       y={ notesOffset + idx * fontSize * lineSpacing }
     >{ line }</tspan>
     {/each}
