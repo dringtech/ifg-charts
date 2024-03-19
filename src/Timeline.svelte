@@ -105,7 +105,10 @@
     [k]: {
       ...c,
       contrastColour: c?.contrastColour || contrastColour(c?.colour),
-      legendTextColour: highContrast(c?.colour, backgroundColour, 250) ? c?.colour : contrastColour(backgroundColour),
+      legendTextColour:
+        highContrast(c?.colour, backgroundColour, 250) ?
+          c?.colour :
+          contrastColour(backgroundColour, 'white', '#333f48'),
     },
   }), {})
 
