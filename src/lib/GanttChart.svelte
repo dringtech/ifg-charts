@@ -6,7 +6,7 @@
   export let data;
   export let fontSize = 15;
   export let barFontSize = 16;
-  export let rowHeight = barFontSize * 2.1;
+  export let rowHeight = barFontSize * 2.25;
   export let rowPadding = 0.25; // 25% top and 25% bottom = 50%
   export let categoryColours = {};
   export let overlay;
