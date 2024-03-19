@@ -4,8 +4,9 @@
   import Legend from './Legend.svelte';
 
   export let data;
-  export let fontSize = 10;
-  export let rowHeight = fontSize * 2.1; // Row height 25px
+  export let fontSize = 15;
+  export let barFontSize = 16;
+  export let rowHeight = barFontSize * 2.1;
   export let rowPadding = 0.25; // 25% top and 25% bottom = 50%
   export let categoryColours = {};
   export let overlay;
@@ -228,7 +229,7 @@
     </g>
   {/each}
 
-  <g bind:this={labelsEl}>
+  <g bind:this={labelsEl} font-size={ barFontSize }>
     {#each data as d, idx}
       {@const labelConfig = labelPositions[idx]}
       <g transform={`translate(${labelConfig?.x || 0} ${yScale(idx)})`}>

@@ -179,7 +179,9 @@
         categoryName={ category }
         categoryColours={ _categoryColours }
         overlay={ _overlay }
-        fontSize={ 16 }
+        fontSize={ 15 }
+        barFontSize={ 16 }
+        minHeight={ minHeight }
         grid={
           {
             background: backgroundColour,
@@ -190,7 +192,7 @@
         bind:this={chart}
       />
       </g>
-      <BottomBar { notes } fontSize={ 16 } bind:this={ bottomBar }/>
+      <BottomBar { notes } fontSize={ 15 } bind:this={ bottomBar }/>
     </SvgWrapper>
   </ImageSaver>
 </div>
