@@ -24,7 +24,7 @@ body {
 
 .controls {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
   justify-content: center;
   margin-block-end: 10px;
 }
