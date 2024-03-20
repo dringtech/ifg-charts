@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TimelineEntry, OverlayEntry } from './timeline.d.ts';
+  import type { TimelineEntry, OverlayEntry, CategoryDetails } from './timeline.d.ts';
   import SvgWrapper from './lib/SvgWrapper.svelte';
   import GanttChart from './lib/GanttChart.svelte';
   import TopBar from './lib/TopBar.svelte';
@@ -19,12 +19,13 @@
   /** List of categories */
   export let categories: Record<string, { label?: string }> = {};
 
-  /** Mapping of categories to colours */
-  export let categoryColours = {};
+  /** Mapping of categories to details */
+  export let categoryColours: Record<string, CategoryDetails> = {};
 
   /** Array of key dates to display on the chart */
   export let overlay: OverlayEntry[] = [];
 
+  /** Labels for the controls */
   export let labels: {
     overlay?: string,
     category?: string,

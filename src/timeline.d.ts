@@ -11,7 +11,7 @@ export type TimelineEntry = {
   /** Label for the timeline entry */
   label: Label;
   /** Additional properties */
-  [property: string]: any;
+  [property: string]: unknown;
 }
 
 /**
@@ -26,4 +26,15 @@ export type OverlayEntry = {
   colour?: string;
   /** Whether the overlay should be persistent */
   persist?: boolean;
+}
+
+type HTMLColour = string;
+
+export type CategoryDetails = {
+  /** Colour of the category, to be used for bar colours */
+  colour: HTMLColour;
+  /** Label to use in place of the object key */
+  label?: string;
+  /** Contrasting colour, to be used for overlaid text on main colour */
+  contrastColour?: HTMLColour;
 }
