@@ -22,10 +22,9 @@
       font-size={ fontSize }
       transform={ `translate(16 ${titleOffset})` }
       font-weight='600'
-      dominant-baseline='hanging'
     >
     {#each title as line, idx (idx) }
-    <tspan x=0 y={ idx * fontSize * lineSpacing }>
+    <tspan x=0 y={ idx * fontSize * lineSpacing } dominant-baseline="hanging">
       { line }
     </tspan>
     {/each}

@@ -177,7 +177,6 @@
         stroke={_grid.colour}
         stroke-width={_grid.width}
         stroke-dasharray={_grid.dashArray}
-        vector-effect="non-scaling-stroke"
       />
       <text
         transform={`translate(0,${height + fontSize / 2 })`}
@@ -199,7 +198,6 @@
       width={d.width}
       height={d.height}
       fill={d.colour}
-      vector-effect="non-scaling-stroke"
     >
       <title>{d.label}</title>
     </rect>
@@ -213,7 +211,6 @@
         stroke={_colour}
         stroke-width="2"
         stroke-dasharray="10 5"
-        vector-effect="non-scaling-stroke"
       />
       <text
         transform="translate(0,-10)"
