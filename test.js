@@ -200,7 +200,7 @@ export const documentationExample = {
   labels: {
     overlay: "Show general elections",
     category: "Colour by",
-    image: "Download as image",
-    svg: "Download as SVG",
+    image: 'Download as image <svg class="o-svg o-svg--download"><use class="o-svg__use" href="/sprite.symbol.svg?v=11#download"></use></svg>',
+    svg: 'Download as SVG <svg class="o-svg o-svg--download"><use class="o-svg__use" href="/sprite.symbol.svg?v=11#download"></use></svg>',
   }
 };

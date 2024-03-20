@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+html {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+.container {
+  max-width: 80rem;
+  margin-inline: auto;
+  padding: 10px;
+  background: lightgray;
+}
+body {
+  background-color: grey;
+}
+#timeline-chart {
+  background-color: paleturquoise;
+}
+#examples {
+  background-color: antiquewhite;
+}
+
+.controls {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-block-end: 10px;
+}
+.controls > div {
+  padding: 0.5rem;
+}
+.controls .markers {
+  color: white;
+  background-color: #00f;
+}
+.controls .colour-coding {
+  background-color: #0f0;
+}
+.controls .buttons {
+  background-color: #f00;
+  display: flex;
+  gap: 0.5rem;
+}
+.controls button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.3em;
+  color: white;
+  font: inherit;
+  background: inherit;
+  border: 1px solid white;
+  border-radius: 2em;
+  padding-inline: 1em;
+}
+.controls button:hover {
+  color: #f00;
+  background: white;
+}
+.controls button svg {
+  height: 1em;
+  aspect-ratio: 1/1;
+}
