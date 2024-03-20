@@ -130,17 +130,7 @@
 <!-- 
   @component
   
-  App that displays a Timeline chart, with optional controls. Use as follows.
-
-  ```tsx
-    <Timeline   data={ [{ start: "2023-01-02", end: '2024-02-01', label: 'Label', propA: 'category-value-a' }] }
-                categories={ { propA: 'Property A' } }
-                colourScale={ { 'category-value-a': { colour: "#aaa", label: "Category A" } } }
-                overlays={ [{ date: '2023-06-04', label: 'Overlay 1' }] }
-                width="800"
-                showControls={ true } showOverlay={ true }
-    ></Timeline>
-    ```
+  App that displays a Timeline chart, with optional controls.
 -->
 <div class="ifg-chart">
   {#if showControls }
