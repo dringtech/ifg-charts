@@ -239,7 +239,6 @@
           text-rendering="optimizeLegibility"
           paint-order="stroke"
           stroke-width={fontSize / 2}
-          stroke-opacity={ 0.7 }
           stroke={ labelConfig?.halo || _grid.background}
         >
           {d.label}
