@@ -137,8 +137,8 @@
   <div class="controls">
     {#if _overlay.length > 0}
     <div class="markers">
-      <label for={ `${id}-marker-toggle` }>{ labels.overlay || "Show overlay" }</label>
       <input id={ `${id}-marker-toggle` } type='checkbox' bind:checked={ showOverlay }>
+      <label for={ `${id}-marker-toggle` }>{ labels.overlay || "Show overlay" }</label>
     </div>
     {/if}
     {#if Object.keys(_categories).length > 1}
@@ -152,8 +152,9 @@
     </div>
     {/if}
     <div class="buttons">
-      <button on:click={ () => saver.exportPNG('timeline.png') }>{ @html labels.image || "Save image" }</button>
-      <button on:click={ () => saver.exportSVG('timeline.svg') }>{ @html labels.svg || "Save SVG" }</button>
+      <div>Download:</div>
+      <button title="Download timeline as SVG" on:click={ () => saver.exportSVG('timeline.svg') }>{ @html labels.svg || "SVG" }</button>
+      <button title="Download timeline as PNG" on:click={ () => saver.exportPNG('timeline.png') }>{ @html labels.image || "PNG" }</button>
     </div>
   </div>
   {/if}
