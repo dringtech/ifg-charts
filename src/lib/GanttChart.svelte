@@ -25,8 +25,8 @@
   $: _margin = {
     left: fontSize * 4,
     right: fontSize * 4,
-    top: fontSize * 3,
-    bottom: fontSize * 5,
+    top: fontSize * 4,
+    bottom: fontSize * 6,
     ...margin,
   };
   const DEFAULT_CATEGORY_VALUE = 'default';

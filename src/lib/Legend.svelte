@@ -25,12 +25,13 @@
     let x = xGutter;
     let y = 0;
     for (const idx in legendItems) {
-      legendMarkerPositions = [...legendMarkerPositions, { x, y }];
-      x += legendItems[idx].getBBox().width / fontSize + 1;
-      if (x * fontSize > width) {
+      const currentItemWidth = legendItems[idx].getBBox().width;
+      if ((x * fontSize + currentItemWidth) > width) {
         x = xGutter;
         y += 1.5;
       }
+      legendMarkerPositions = [...legendMarkerPositions, { x, y }];
+      x += currentItemWidth / fontSize + 1;
     }
   }
 
