@@ -1,5 +1,5 @@
 import { cycle, randomDateSequence } from './utils.js';
-import { categoryColours } from './src/charts.js';
+import { categoryColours } from './dist/ifg-charts.es.js';
 
 export { categoryColours };
 
