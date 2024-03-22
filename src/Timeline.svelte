@@ -82,7 +82,8 @@
 	$: _data = data.map((d) => ({
 		...d,
 		start: new Date(d.start),
-		end: new Date(d.end)
+		end: new Date(d.end),
+    [category]: Object.keys(_categoryColours).includes(d[category]) ? d[category] : GanttChart.DEFAULT_CATEGORY_VALUE,
 	})).sort((a, b) => a.start.getTime() - b.start.getTime());
 
   // Convert date strings to actual dates, split labels by spaces if not aleady an array

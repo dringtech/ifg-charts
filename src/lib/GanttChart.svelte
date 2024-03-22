@@ -29,7 +29,7 @@
     bottom: fontSize * 6,
     ...margin,
   };
-  const DEFAULT_CATEGORY_VALUE = 'default';
+  export const DEFAULT_CATEGORY_VALUE = 'default';
 
   $: _grid = {
     colour: '#999',
@@ -45,6 +45,7 @@
       colour: '#aaa',
       label: 'Unknown',
       contrastColour: '#000',
+      legendTextColour: '#333f48',
     },
     ...categoryColours,
   };
@@ -108,7 +109,7 @@
       (a, d) => a.add(d[categoryName] || DEFAULT_CATEGORY_VALUE),
       new Set()
     )
-  ).sort((a, b) => (a < b ? -1 : 1));
+  ).sort((a, b) => (a < b ? -1 : 1)).filter(a => Object.keys(_categoryColours).includes(a));
 
   $: xFormatter = xScale.tickFormat();
 

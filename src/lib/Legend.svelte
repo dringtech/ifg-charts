@@ -53,7 +53,7 @@
         height={fontSize - 2}
         fill={colourScale(cat)}
       />
-      <text dx={fontSize * 1} fill={thisCategory.legendTextColour}
+      <text dx={fontSize * 1} fill={thisCategory?.legendTextColour }
         >{thisCategory?.label || cat}</text
       >
     </g>
