@@ -5,10 +5,11 @@ export function timeline(
   targetId,
   options
 ) {
-  const app = new Timeline({
+  const instance = new Timeline({
     target: document.getElementById(targetId),
     props: options
   })
+  return instance;
 }
 
 export {
