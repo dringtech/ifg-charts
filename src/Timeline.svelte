@@ -118,7 +118,7 @@
   $: svgOpts = {
     'stroke-linecap': 'round',
     'stroke-linejoin': 'round',
-    'font-stack': fontStack, 
+    'font-family': fontStack, 
     style:`background:${ backgroundColour };`,
   }
   let topBar;
