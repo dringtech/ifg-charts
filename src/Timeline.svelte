@@ -91,7 +91,8 @@
     ...o,
     label: Array.isArray(o.label) ? o.label : o.label.split(/\s+/),
     date: new Date(o.date),
-  })).filter(o => showOverlay || o.persist)
+  }))
+  // .filter(o => showOverlay || o.persist)
 
   $: _categories = Object.entries(categories).reduce(
     (c, [k, v]) => ({
@@ -173,7 +174,7 @@
         endDate={ endDate && new Date(endDate) }
         categoryName={ category }
         categoryColours={ _categoryColours }
-        overlay={ _overlay }
+        overlay={ _overlay.filter(o => showOverlay || o.persist) }
         fontSize={ 15 }
         barFontSize={ 16 }
         minHeight={ minHeight }
