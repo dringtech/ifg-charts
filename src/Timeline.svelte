@@ -127,6 +127,15 @@
 
   $: chartOffset = topBar?.barHeight || 0;
   $: height = chartOffset + chart?.chartHeight + bottomBar?.barHeight;
+
+  function savePngHandler(e) {
+    e.stopPropagation();
+    saver.exportPNG('timeline.png');
+  }
+  function saveSvgHandler(e) {
+    e.stopPropagation();
+    saver.exportSVG('timeline.svg');
+  }
 </script>
 
 <!-- 
@@ -155,8 +164,8 @@
     {/if}
     <div class="buttons">
       <div>Download:</div>
-      <button title="Download timeline as SVG" on:click={ () => saver.exportSVG('timeline.svg') }>{ @html labels.svg || "SVG" }</button>
-      <button title="Download timeline as PNG" on:click={ () => saver.exportPNG('timeline.png') }>{ @html labels.image || "PNG" }</button>
+      <button title="Download timeline as SVG" on:click={ saveSvgHandler }>{ @html labels.svg || "SVG" }</button>
+      <button title="Download timeline as PNG" on:click={ savePngHandler }>{ @html labels.image || "PNG" }</button>
     </div>
   </div>
   {/if}
