@@ -51,11 +51,11 @@ export const categoryColours = {
     colour: '#ee3224',
     label: 'Labour',
   },
-  'party-liberal': {
+  'party-liberal-democrat': {
     colour: '#ffb703',
-    label: 'Lib Dem/Liberal',
+    label: 'Liberal Democrat',
   },
-  'party-SNP': {
+  'party-snp': {
     colour: '#fff95d',
     label: 'SNP',
   },
@@ -71,7 +71,7 @@ export const categoryColours = {
     colour: '#6ab023',
     label: 'Green',
   },
-  'party-UKIP': {
+  'party-ukip': {
     colour: '#722889',
     label: 'UKIP',
   },
