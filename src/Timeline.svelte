@@ -73,7 +73,7 @@
    * The currently selected category. Defaults to the first category
    * if categories are provided or `undefined` if not.
    */
-  let category = Object.keys(categories)[0] || undefined;
+  export let category = Object.keys(categories)[0] || undefined;
 
   /** Image saver reference */
   let saver: ImageSaver;
@@ -128,11 +128,11 @@
   $: chartOffset = topBar?.barHeight || 0;
   $: height = chartOffset + chart?.chartHeight + bottomBar?.barHeight;
 
-  function savePngHandler(e) {
+  export function savePngHandler(e) {
     e.stopPropagation();
     saver.exportPNG('timeline.png');
   }
-  function saveSvgHandler(e) {
+  export function saveSvgHandler(e) {
     e.stopPropagation();
     saver.exportSVG('timeline.svg');
   }

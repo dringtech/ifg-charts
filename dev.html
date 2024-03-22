@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
+    <button onclick="tl.$set({showOverlay: true})">Show overlay</button>
+    <button onclick="tl.$set({showOverlay: false})">Hide overlay</button>
+
+    <button onclick="tl.$set({category: 'gender' })">Colour by Gender</button>
+    <button onclick="tl.$set({category: 'party' })">Colour by Party</button>
+    <button onclick="tl.$set({category: 'rank-equivalence' })">Colour by Ministerial Rank</button>
+
+    <button onclick="tl.saveSvgHandler(event)">Export SVG</button>
+    <button onclick="tl.savePngHandler(event)">Export PNG</button>
+    
+
     <div id="timeline-chart-doc" class="chart container"></div>
     <div id="timeline-chart" class="chart container"></div>
     <div id="examples" class="container"></div>
@@ -15,7 +26,7 @@
       import { timeline } from '/src/charts.js';
       import { options, categoryColours, overlay, documentationExample } from '/test.js';
 
-      timeline("timeline-chart-doc", documentationExample);
+      globalThis.tl = timeline("timeline-chart-doc", documentationExample);
 
       timeline("timeline-chart", options);
 
