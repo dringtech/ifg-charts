@@ -248,7 +248,9 @@
   </g>
   {#if categories.length > 0}
   <Legend
-    categories={ categories }
+    categories={
+      Object.keys(categoryColours).filter(c => categories.includes(c))
+    }
     fontSize={ fontSize }
     colourScale={ colourScale }
     width={ width }

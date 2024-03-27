@@ -8,10 +8,6 @@
   export let width;
   export let top;
 
-  // Attempt to order per the object provided
-  $: orderedCategories = Object.keys(categoryColours)
-    .filter(c => categories.includes(c));
-
   /**
    * Automatically re-assigns legend item positioning based on longest item.
    */
@@ -45,7 +41,7 @@
 </script>
 
 <g transform={`translate(${ xShift }, ${ top })`} bind:this={legendEl} font-size={ fontSize }>
-  {#each orderedCategories as cat, index}
+  {#each categories as cat, index}
     {@const thisCategory = categoryColours[cat]}
     {@const offset = legendMarkerPositions[index] || { x: 0, y: 0 }}
     <g
