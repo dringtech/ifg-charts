@@ -44,7 +44,7 @@
   });
 </script>
 
-<g transform={`translate(${ xShift }, ${ top })`} bind:this={legendEl}>
+<g transform={`translate(${ xShift }, ${ top })`} bind:this={legendEl} font-size={ fontSize }>
   {#each orderedCategories as cat, index}
     {@const thisCategory = categoryColours[cat]}
     {@const offset = legendMarkerPositions[index] || { x: 0, y: 0 }}
