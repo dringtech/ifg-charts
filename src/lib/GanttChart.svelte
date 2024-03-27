@@ -7,7 +7,7 @@
   export let fontSize = 15;
   export let barFontSize = 16;
   export let rowHeight = barFontSize * 2.25;
-  export let rowPadding = 0.25; // 25% top and 25% bottom = 50%
+  export let rowPadding = 1/3;
   export let categoryColours = {};
   export let overlay;
   export let categoryName = 'default';
@@ -70,8 +70,7 @@
 
   $: yScale = scaleBand()
     .domain(yDomain)
-    .range([0, rowHeight * data.length])
-    .padding(rowPadding);
+    .range([0, rowHeight * data.length]);
 
   $: _overlay = overlay.filter(
     (o) =>
@@ -83,9 +82,9 @@
     const barStartDate = Math.max(b.start, earliestDate);
     const barEndDate = Math.min(b.end, latestDate);
     const x = xScale(barStartDate);
-    const y = yScale(idx);
+    const y = yScale(idx) + yScale.step() * (rowPadding / 2);
     const width = Math.max(xScale(barEndDate) - x, minWidth);
-    const height = yScale.bandwidth();
+    const height = yScale.step() * (1 - rowPadding);
     const colour = colourScale(b[categoryName] || 'default');
     return {
       ...b,
