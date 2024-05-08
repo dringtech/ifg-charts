@@ -86,7 +86,9 @@ Expected options format (in sort of TypeScript format...):
   /** Overriden font-stack for chart */
   fontStack: string,
   /** Style to embed in the extracted SVG and for PNG generation */
-  style: string
+  style: string,
+  /** Minimum contrast to allow before selecting a standard contrasting colour - defaults to 165, lower numbers tend to keep the colour at the expense of accessibility */
+  contrastClip: number,
 }
 ```
 
