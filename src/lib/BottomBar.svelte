@@ -10,7 +10,7 @@
 
   let lineSpacing = 1.1;
   export let barHeight = 0;
-  $: barHeight = Math.max(notesOffset * 2 + fontSize * lineSpacing * notes.length, 0);
+  $: barHeight = notesOffset * 2 + fontSize * lineSpacing * Math.max(notes.length, 1);
 </script>
 <svelte:options accessors />
 <g transform={ `translate(0 ${ ($height || 0) - barHeight })` }>
