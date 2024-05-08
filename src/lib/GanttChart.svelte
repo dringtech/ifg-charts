@@ -218,6 +218,7 @@
         text-anchor="middle"
         dominant-baseline="text-top"
         text-rendering="optimizeLegibility"
+        font-weight={ 600 }
       >
         {#each label.toReversed() as line, idx}
           <tspan x="0" y={-idx * fontSize}>{line}</tspan>
@@ -240,6 +241,7 @@
           paint-order="stroke"
           stroke-width={fontSize / 2}
           stroke={ labelConfig?.halo || _grid.background}
+          font-weight={ 600 }
         >
           {d.label}
         </text>
