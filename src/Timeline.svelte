@@ -61,6 +61,9 @@
     }
   `;
 
+  /** Contrast clip level - smaller numbers favour the actual colour */
+  export let contrastClip = 160;
+
   /**
    * A generated id that uniquely identifies the component.
    * Mainly used in input to label bindings
@@ -107,9 +110,9 @@
     ...a,
     [k]: {
       ...c,
-      contrastColour: c?.contrastColour || contrastColour(c?.colour),
+      contrastColour: c?.contrastColour || contrastColour(c?.colour, 'white', '#333f48'),
       legendTextColour:
-        highContrast(c?.colour, backgroundColour, 250) ?
+        highContrast(c?.colour, backgroundColour, contrastClip) ?
           c?.colour :
           contrastColour(backgroundColour, 'white', '#333f48'),
     },

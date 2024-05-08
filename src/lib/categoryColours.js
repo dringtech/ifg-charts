@@ -25,6 +25,7 @@ export const categoryColours = {
   },
   'rank-equivalence-mos': {
       colour: '#00A8E1',
+      contrastColour: 'white',
       label: 'Minister of state'
   },
   'rank-equivalence-puss': {
@@ -37,6 +38,7 @@ export const categoryColours = {
   },
   'rank-equivalence-parl': {
       colour: '#BD73D2',
+      contrastColour: 'white',
       label: 'Other parliamentary role'
   },
   'rank-equivalence-on-leave': {

@@ -8,7 +8,7 @@ const partyGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith(
 const genderGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('gender-')))
 const rankGen = cycle(...Object.keys(categoryColours).filter(x => x.startsWith('rank-')))
 
-export const generatedData = Array.from(Array(10)).map((_, i) => ({
+export const generatedData = Array.from(Array(14)).map((_, i) => ({
   ...(dateGen.next().value),
   label: `Item ${i + 1}`,
   gender: genderGen.next().value,
@@ -47,7 +47,7 @@ export const options = {
   notes: [
     'Source: Institute for Government analysis of [publisher], [dataset], [time period]',
     'Second line of notes.'
-  ]
+  ],
   // showControls: false,
 }
 
@@ -62,13 +62,13 @@ export const documentationExample = {
     // Additional properties can be used for category colouring
     {
       start: "2024-01-01", end: "2024-02-01", label: "First bar",
-      party: "party-labour", gender: "gender-m"
+      party: "party-labour", gender: "gender-m", rank: "rank-equivalence-parl"
     }, {
       start: "2024-02-01", end: "2024-03-01", label: "Second bar",
-      party: "party-conservative", gender: "gender-f"
+      party: "party-conservative", gender: "gender-f", rank: "rank-equivalence-dpm"
     }, {
       start: "2024-03-01", end: "2024-03-01T01:00:00", label: "Narrow Bar (min 1.5px)",
-      party: "party-labour", gender: "gender-x"
+      party: "party-labour", gender: "gender-x", rank: "rank-equivalence-pm"
     },
   ],
 
@@ -80,6 +80,7 @@ export const documentationExample = {
   categories: {
     party: { label: 'Party'},
     gender: { label: 'Gender'},
+    rank: { label: 'Rank'},
   },
 
   // Category colour object keys should match values used in additional properties
@@ -99,6 +100,8 @@ export const documentationExample = {
 
   chartWidth: 1024, // Width of chart
   minHeight: 200,  // Minimum height of chart
+
+  contrastClip: 160, // Contrast clip level
 
   showControls: true,  // Whether or not to show controls on the chart
   showOverlay: true,   // Show or hide the non-persistent overlay items
