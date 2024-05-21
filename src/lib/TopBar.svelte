@@ -24,7 +24,7 @@
       font-weight='600'
     >
     {#each title as line, idx (idx) }
-    <tspan x=0 y={ idx * fontSize * lineSpacing } dominant-baseline="hanging">
+    <tspan x=0 y={ idx * fontSize * lineSpacing } dy="0.85em">
       { line }
     </tspan>
     {/each}

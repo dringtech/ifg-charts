@@ -40,7 +40,7 @@
     <tspan
       x="16"
       y={ notesOffset + idx * fontSize * lineSpacing }
-      dominant-baseline="hanging" 
+      dy="0.85em"
     >{ line }</tspan>
     {/each}
   </text>

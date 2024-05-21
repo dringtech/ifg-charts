@@ -180,7 +180,7 @@
       <text
         transform={`translate(0,${height + fontSize / 2 })`}
         text-anchor="middle"
-        dominant-baseline="hanging"
+        dy="0.85em"
         fill={_grid.labelColour}
         text-rendering="optimizeLegibility"
       >
