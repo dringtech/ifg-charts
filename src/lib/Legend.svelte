@@ -20,19 +20,30 @@
     const legendItems = Array.from(
       legendEl?.querySelectorAll('g').values() || []
     );
-    legendMarkerPositions = [];
+    let positions = [];
+    const lineLengths = [];
     const xGutter = 0;
     let x = xGutter;
     let y = 0;
+    let line = 0;
     for (const idx in legendItems) {
       const currentItemWidth = legendItems[idx].getBBox().width;
       if ((x * fontSize + currentItemWidth) > width) {
         x = xGutter;
         y += 1.5;
+        line++;
       }
-      legendMarkerPositions = [...legendMarkerPositions, { x, y }];
-      x += currentItemWidth / fontSize + 1;
+      positions = [...positions, { x, y, line }];
+      const scaledWidth = currentItemWidth / fontSize + 1
+      x += scaledWidth;
+      // Set new lines to -1 to account for extra gap in added in at end of scaledWidth
+      lineLengths[line] = (lineLengths[line] || -1) + scaledWidth;
     }
+    const lineOffsets = lineLengths.map(x => ((width / fontSize) - x) / 2);
+    legendMarkerPositions = positions.map(({x, y, line}) => ({
+      x: x + lineOffsets[line],
+      y: y
+    }));
   }
 
   afterUpdate(() => {
