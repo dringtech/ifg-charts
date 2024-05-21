@@ -64,8 +64,7 @@
 
   $: xScale = scaleTime()
     .domain([startDate|| Math.min.apply(null, xDomain), endDate || Math.max.apply(null, xDomain)])
-    .range([0, width])
-    .nice();
+    .range([0, width]);
   $: [earliestDate, latestDate] = xScale.domain()
 
   $: yScale = scaleBand()
