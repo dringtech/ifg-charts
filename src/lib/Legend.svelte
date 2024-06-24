@@ -65,6 +65,7 @@
         fill={colourScale(cat)}
       />
       <text dx={fontSize * 1} fill={thisCategory?.legendTextColour } font-weight={ 600 }
+        dominant-baseline="text-top" y={ -1 }
         >{thisCategory?.label || cat}</text
       >
     </g>
