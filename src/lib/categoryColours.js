@@ -39,7 +39,7 @@ export const categoryColours = {
   'rank-equivalence-parl': {
       colour: '#BD73D2',
       contrastColour: 'white',
-      label: 'Other parliamentary role'
+      label: 'Parliamentary role'
   },
   'rank-equivalence-on-leave': {
       colour: '#c1c5c8',
