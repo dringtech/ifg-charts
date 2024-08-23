@@ -34,7 +34,7 @@ export const categoryColours = {
   },
   'rank-equivalence-parl-lead': {
       colour: '#622574',
-      label: 'Parliamentary leadership'
+      label: 'Parliamentary leadership role'
   },
   'rank-equivalence-parl': {
       colour: '#BD73D2',
