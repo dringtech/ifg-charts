@@ -34,12 +34,12 @@ export const categoryColours = {
   },
   'rank-equivalence-parl-lead': {
       colour: '#622574',
-      label: 'Parliamentary leadership'
+      label: 'Parliamentary leadership role'
   },
   'rank-equivalence-parl': {
       colour: '#BD73D2',
       contrastColour: 'white',
-      label: 'Other parliamentary role'
+      label: 'Parliamentary role'
   },
   'rank-equivalence-on-leave': {
       colour: '#c1c5c8',
